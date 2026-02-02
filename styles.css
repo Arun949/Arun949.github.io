@@ -188,26 +188,6 @@ a {
     position: relative;
     overflow: hidden;
 }
-.hero-name-bg {
-    position: absolute;
-    right: 0;
-    bottom: -40px;
-
-    font-family: var(--font-heading);
-    font-size: 5.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    text-align: right;
-
-    background: var(--gradient-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    opacity: 0.18;
-    user-select: none;
-    pointer-events: none;
-}
 
 .hero::after {
     content: '';
@@ -275,6 +255,45 @@ a {
     display: flex;
     gap: 1rem;
     margin-bottom: 3rem;
+}
+/* ===============================
+   TOP-RIGHT PROFILE PHOTO
+================================ */
+.hero-photo-corner {
+    position: absolute;
+    top: 110px;      /* below navbar */
+    right: 60px;
+
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 3px solid rgba(139,92,246,0.6);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+
+    background: var(--background);
+    z-index: 5;
+}
+
+/* OPTIONAL: faint background name (keep or remove) */
+.hero-name-bg {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+
+    font-size: 5.5rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    text-align: right;
+
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    opacity: 0.15;
+    pointer-events: none;
 }
 
 .btn {
@@ -672,6 +691,15 @@ section {
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.75rem;
+    }
+     .hero-image {
+        top: 90px;
+        right: 20px;
+    }
+
+    .hero-photo-corner {
+        width: 90px;
+        height: 90px;
     }
 
     .about-content {
