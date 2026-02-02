@@ -521,7 +521,7 @@ section {
     display: flex;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     color: var(--accent);
 }
 
