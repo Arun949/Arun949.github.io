@@ -273,7 +273,7 @@ a {
     border: 3px solid rgba(139,92,246,0.6);
     box-shadow: 0 10px 25px rgba(0,0,0,0.45);
 
-    background: var(--background);
+    background-color: #0f172a;
     z-index: 10;
 }
 
