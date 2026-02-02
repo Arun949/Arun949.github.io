@@ -264,8 +264,8 @@ a {
     top: 110px;      /* below navbar */
     right: 60px;
 
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
 
     border-radius: 50%;
     object-fit: cover;
@@ -274,7 +274,7 @@ a {
     box-shadow: 0 10px 25px rgba(0,0,0,0.45);
 
     background: var(--background);
-    z-index: 5;
+    z-index: 10;
 }
 
 /* OPTIONAL: faint background name (keep or remove) */
@@ -698,6 +698,8 @@ section {
     }
 
     .hero-photo-corner {
+        top: 90px;
+        right: 20px;
         width: 90px;
         height: 90px;
     }
