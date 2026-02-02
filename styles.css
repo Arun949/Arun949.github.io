@@ -531,6 +531,7 @@ section {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem 2rem;
+    margin-bottom: 3rem;
 }
 .skill-tag {
     padding: 2rem 2rem;
