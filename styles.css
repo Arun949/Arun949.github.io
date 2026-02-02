@@ -521,14 +521,14 @@ section {
     display: flex;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: var(--accent);
 }
 
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.9rem 0.9rem;
+    gap: 2rem 2rem;
 }
 
 .skill-tag {
