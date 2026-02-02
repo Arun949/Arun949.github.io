@@ -260,22 +260,23 @@ a {
    TOP-RIGHT PROFILE PHOTO
 ================================ */
 .hero-photo-corner {
-    position: absolute;
-    top: 50%;  /* below navbar */
-    transform: TranslateY(-50%);
-    right: 80px;
+    position: absolute !important;
 
-    width: 500px;
-    height: 500px;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 
-    border-radius: 50%;
-    object-fit: cover;
+    right: 80px !important;
 
-    border: 4px solid rgba(139,92,246,0.7);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    width: 200px !important;
+    height: 200px !important;
 
-    background-color: #0f172a;
-    z-index: 10;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+
+    border: 4px solid rgba(139, 92, 246, 0.7);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+
+    z-index: 999 !important;
 }
 
 /* OPTIONAL: faint background name (keep or remove) */
@@ -697,15 +698,17 @@ section {
         top: 90px;
         right: 20px;
     }
+     .hero-photo-corner {
+         position: static !important;
+         transform: none !important;
+         
+         width: 140px !important;
+         height: 140px !important;
+         
+         margin: 2rem auto 0;
+         display: block;
+     }
 
-    .hero-photo-corner {
-        position: static;
-        transform: none;
-        width: 140px;
-        height: 140px;
-        margin: 2rem auto 0;
-        display: block;
-    }
 
     .about-content {
         grid-template-columns: 1fr;
