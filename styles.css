@@ -511,8 +511,11 @@ section {
     font-weight: 500;
     margin-bottom: 1rem;
 }
-
 /* Skills */
+.skill-category {
+    margin-bottom: 4rem; /* Add this to create gap between sections */
+}
+
 .skill-category h3 {
     padding: 0.75rem 1rem;
     border-radius: var(--radius-md);
@@ -524,13 +527,11 @@ section {
     margin-bottom: 3rem;
     color: var(--accent);
 }
-
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem 2rem;
 }
-
 .skill-tag {
     padding: 2rem 2rem;
     background: rgba(255, 255, 255, 0.03);
@@ -540,7 +541,6 @@ section {
     color: var(--text-muted);
     transition: all 0.3s ease;
 }
-
 .skill-tag:hover {
     background: rgba(139, 92, 246, 0.1);
     border-color: var(--primary);
