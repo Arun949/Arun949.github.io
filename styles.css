@@ -188,6 +188,26 @@ a {
     position: relative;
     overflow: hidden;
 }
+.hero-name-bg {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+
+    font-family: var(--font-heading);
+    font-size: 5.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: right;
+
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    opacity: 0.18;
+    user-select: none;
+    pointer-events: none;
+}
 
 .hero::after {
     content: '';
