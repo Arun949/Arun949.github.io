@@ -513,7 +513,7 @@ section {
 }
 /* Skills */
 .skill-category {
-    margin-bottom: 4rem; /* Add this to create gap between sections */
+    margin-bottom: 3rem; /* Add this to create gap between sections */
 }
 
 .skill-category h3 {
@@ -524,7 +524,7 @@ section {
     display: flex;
     align-items: center;
     gap: 1.75rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     color: var(--accent);
 }
 .skill-tags {
