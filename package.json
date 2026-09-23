@@ -1,0 +1,24 @@
+{
+  "name": "arun949.github.io",
+  "version": "1.0.0",
+  "description": "A premium, high-performance portfolio website engineered for an AI & ML specialist. This site combines cutting-edge visual aesthetics with optimized technical performance to showcase advanced engineering projects.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arun949/Arun949.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Arun949/Arun949.github.io/issues"
+  },
+  "homepage": "https://github.com/Arun949/Arun949.github.io#readme",
+  "dependencies": {
+    "framer-motion": "^13.4.1"
+  }
+}
