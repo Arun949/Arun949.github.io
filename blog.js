@@ -16,7 +16,7 @@ if (!articles.length) {
       const item = document.createElement(article.url ? 'a' : 'article');
       item.className = 'article-card';
       if (article.url) item.href = article.url;
-      item.innerHTML = `<p class="project-number">${article.category || 'Notes'}</p><h3>${article.title}</h3><p>${article.summary}</p><span>${formatDate(article.date)}${article.readTime ? ` · ${article.readTime}` : ''}</span>`;
+      item.innerHTML = `${article.image ? `<img src="${article.image}" alt="${article.imageAlt || ''}" width="1400" height="788" loading="lazy">` : ''}<div class="article-card-content"><p class="project-number">${article.category || 'Notes'}</p><h3>${article.title}</h3><p>${article.summary}</p><span>${formatDate(article.date)}${article.readTime ? ` · ${article.readTime}` : ''}</span></div>`;
       articleList.appendChild(item);
     });
 }
