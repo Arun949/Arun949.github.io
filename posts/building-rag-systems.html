@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Five practical decisions for building retrieval-augmented generation systems that stay grounded, testable, and useful.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#e9e7df">
+  <link rel="canonical" href="https://arun949.github.io/posts/building-rag-systems.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Building RAG Systems You Can Trust | Arunkumar Aluru">
+  <meta property="og:description" content="Five practical decisions for grounded, testable retrieval-augmented generation systems.">
+  <meta property="og:image" content="https://arun949.github.io/assets/rag-systems-cover.jpg">
+  <meta property="article:published_time" content="2026-09-23">
+  <title>Building RAG Systems You Can Trust | Arunkumar Aluru</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20260923">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a><a class="nav-back" href="../blog.html">My Blog</a></nav></header>
+  <main id="main-content">
+    <article class="post container">
+      <header class="post-header"><p class="eyebrow">Generative AI / 5 min read</p><h1>Building RAG systems you can <em>trust.</em></h1><p class="post-dek">A good RAG system is not defined by a clever prompt. It is defined by whether it retrieves the right evidence, cites it clearly, and behaves honestly when the evidence is weak.</p><p class="post-meta">September 23, 2026 · Arunkumar Aluru</p></header>
+      <figure class="post-cover"><img src="../assets/rag-systems-cover.jpg" alt="Abstract diagram of documents flowing through a layered retrieval system into a grounded answer" width="1400" height="788" fetchpriority="high"></figure>
+      <div class="post-body">
+        <p class="post-lead">Retrieval-augmented generation connects a language model to a knowledge base. That sounds simple, but the difference between a polished demo and a reliable system is in the decisions around retrieval, evidence, evaluation, and user control.</p>
+        <h2>1. Treat retrieval as a first-class system</h2>
+        <p>The model can only ground an answer in the material it receives. Retrieval should therefore be observable and testable, not a hidden pre-processing step. Start by inspecting the passages returned for real questions and checking whether they actually contain the evidence a user needs.</p>
+        <p>For document-heavy domains, combining semantic and keyword search is often more dependable than using either alone. Semantic search helps with meaning, while keyword search preserves exact terminology. Reciprocal Rank Fusion is a practical way to combine both signals without making the system unnecessarily complex.</p>
+        <h2>2. Make evidence visible</h2>
+        <p>A grounded answer should let the reader see where it came from. Source titles, page references, and quoted excerpts create a useful boundary between what the documents support and what the model may be inferring.</p>
+        <p>This matters especially in domains such as business law, healthcare, or policy. Citations do not make an answer correct by themselves, but they make it reviewable. That is a much better starting point for trust.</p>
+        <h2>3. Test the failure cases</h2>
+        <p>Evaluation should cover more than questions with obvious answers. A useful test set includes factual questions, cross-document questions, ambiguous requests, and questions that are outside the corpus. The last category is important because a reliable system needs to say when it does not have enough evidence.</p>
+        <p>In my Business Law RAG Assistant, I used a focused evaluation set alongside answer-faithfulness checks. This made it possible to inspect whether a response was supported by retrieved context instead of only judging whether it sounded convincing.</p>
+        <h2>4. Keep a human in the loop when it matters</h2>
+        <p>Automation should not remove the opportunity to inspect and improve an answer. Review, rewrite, and rephrase controls give people a useful way to correct the system while revealing where retrieval or prompts need attention.</p>
+        <h2>5. Measure the system beyond accuracy</h2>
+        <p>For production work, track retrieval quality, answer faithfulness, cost, latency, and the reasons users need to intervene. These signals help you improve the system as a whole instead of overfitting a prompt to a small set of examples.</p>
+        <p>A trustworthy RAG system is not one that answers everything. It is one that makes the limits of its evidence clear and gives users a path to inspect the result.</p>
+        <p class="post-callout">Explore the implementation in the <a href="https://github.com/Arun949/Business-Law-RAG-LLM-AI-Assistant" target="_blank" rel="noopener noreferrer">Business Law RAG AI Assistant repository</a>.</p>
+      </div>
+    </article>
+  </main>
+  <footer class="footer container"><span>© 2026 Arunkumar Aluru</span><a href="../blog.html">More articles</a></footer>
+</body>
+</html>

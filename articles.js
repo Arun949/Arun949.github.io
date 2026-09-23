@@ -9,4 +9,15 @@
     readTime: '6 min read'
   }
 */
-window.blogArticles = [];
+window.blogArticles = [
+  {
+    title: 'Building RAG Systems You Can Trust',
+    date: '2026-09-23',
+    category: 'Generative AI',
+    summary: 'Five practical decisions that make retrieval-augmented generation more grounded, testable, and useful.',
+    url: 'posts/building-rag-systems.html',
+    readTime: '5 min read',
+    image: 'assets/rag-systems-cover.jpg',
+    imageAlt: 'Abstract diagram of documents flowing through a layered retrieval system into a grounded answer'
+  }
+];
