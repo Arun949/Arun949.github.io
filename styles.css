@@ -76,14 +76,14 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
 .project-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .project { position: relative; display: flex; min-height: 390px; border: 1px solid var(--ink); background: var(--panel); }
 .project::after { content: ''; position: absolute; right: 14px; top: 14px; width: 8px; height: 8px; border: 1px solid var(--acid); }
-.project-featured { grid-column: span 2; min-height: 430px; background: #cbd9c5; }
+.project-featured { grid-column: auto; min-height: 390px; background: var(--panel); }
 .project-content { display: flex; width: 100%; flex-direction: column; padding: 2rem; }
 .project-number { color: var(--acid); font: 500 .7rem var(--mono); letter-spacing: .1em; }
 .project h3, .publication h3 { margin-bottom: .85rem; font: 400 clamp(2rem, 3vw, 3rem) var(--serif); }.project-content > p:not(.project-number) { max-width: 740px; color: var(--muted); }
 .project-result { margin-top: auto; border-left: 2px solid var(--acid); padding-left: .75rem; color: var(--ink)!important; font-weight: 700; }
 .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.35rem 0; padding: 0; list-style: none; }.tags li { padding: .22rem .55rem; border: 1px solid var(--line); font: 500 .67rem var(--mono); }
 .text-links { margin: auto 0 0; font: 700 .75rem var(--mono); letter-spacing: .04em; text-transform: uppercase; }
-.project-text { background: var(--ink); color: var(--paper); }.project-text .project-content > p:not(.project-number) { color: #becbc0; }.project-text .tags li { border-color: #799088; }.project-text .text-links a:hover { color: #d6a168; }
+.project-text { background: var(--panel); color: var(--ink); }.project-text .project-content > p:not(.project-number) { color: var(--muted); }.project-text .tags li { border-color: var(--line); }.project-text .text-links a:hover { color: var(--acid); }
 .repo-note { max-width: 720px; margin: 1.8rem 0 0; color: var(--muted); font-size: .9rem; }
 
 .publication { max-width: 900px; padding: 1.5rem 0 1.5rem 2rem; border-left: 2px solid #d6a168; }.publication > p:not(.project-number) { max-width: 760px; color: #c4cec5; }.publication .project-number { color: #d6a168; }.text-link { font-weight: 700; }
