@@ -132,6 +132,15 @@ function markdownToHtml(source) {
 /* Titles may use *italic* for the green accent; cards and metadata use the plain text. */
 const plainTitle = text => String(text || '').replace(/\*([^*]+)\*/g, '$1').replace(/\s+/g, ' ').trim();
 
+/* Card titles use Title Case: capitalise each word except short joining words,
+   keep acronyms (RAG, AI) as written, and drop a trailing full stop. */
+const SMALL_WORDS = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'nor', 'for', 'so', 'yet', 'at', 'by', 'in', 'of', 'on', 'to', 'up', 'as', 'via', 'vs', 'per']);
+const titleCase = text => plainTitle(text).replace(/\.$/, '').split(' ').map((word, i, words) => {
+  const lower = word.toLowerCase();
+  if (i > 0 && i < words.length - 1 && SMALL_WORDS.has(lower) && !/[:–—]$/.test(words[i - 1])) return lower;
+  return word.replace(/^([^\p{L}\p{N}]*)(\p{L})/u, (_, pre, ch) => pre + ch.toUpperCase());
+}).join(' ');
+
 function renderPostPage(post, bodyHtml) {
   const url = `${SITE}/posts/${post.slug}.html`;
   const image = post.image ? `${SITE}/${post.image}` : `${SITE}/assets/social-preview.jpg?v=2`;
@@ -228,5 +237,5 @@ const upsertSitemap = (xml, slug, date) => {
 
 
 if (typeof module !== 'undefined') {
-  module.exports = { SITE, TRACKS, escapeHtml, slugify, today, longDate, readTime, safeUrl, inline, markdownToHtml, renderPostPage, sitemapEntry, removeFromSitemap, upsertSitemap, plainTitle };
+  module.exports = { SITE, TRACKS, titleCase, escapeHtml, slugify, today, longDate, readTime, safeUrl, inline, markdownToHtml, renderPostPage, sitemapEntry, removeFromSitemap, upsertSitemap, plainTitle };
 }

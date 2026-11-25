@@ -21,8 +21,8 @@ for (const entry of articles) {
   const src = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
 
   entry.tracks = src.tracks;
-  entry.title = core.plainTitle(src.title);
-  if (src.title.includes('*')) entry.titleMarkup = src.title; else delete entry.titleMarkup;
+  entry.title = core.titleCase(src.title);
+  entry.titleMarkup = src.title;
   if (src.dek) entry.dek = src.dek; else delete entry.dek;
   entry.category = src.category;
   entry.summary = src.summary;

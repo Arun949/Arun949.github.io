@@ -318,8 +318,8 @@ const publish = async () => {
     const entry = {
       slug,
       tracks: tracksChosen,
-      title: plainTitle(title),
-      ...(title.includes('*') ? { titleMarkup: title } : {}),
+      title: titleCase(title),
+      titleMarkup: title,
       ...(fields.dek.value.trim() ? { dek: fields.dek.value.trim() } : {}),
       date,
       ...(editing ? { updated: today() } : {}),
@@ -351,7 +351,7 @@ const publish = async () => {
       { path: 'articles.json', content: `${JSON.stringify(updatedList, null, 2)}\n` },
       { path: 'sitemap.xml', content: upsertSitemap(sitemap, slug, entry.updated || date) }
     );
-    await commitFiles(files, `${editing ? 'Update' : 'Publish'} post: ${plainTitle(title)}`);
+    await commitFiles(files, `${editing ? 'Update' : 'Publish'} post: ${titleCase(title)}`);
 
     articles = updatedList;
     renderPostList();
