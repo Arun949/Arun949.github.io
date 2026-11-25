@@ -58,7 +58,7 @@ window.blogArticles = [
     title: 'Renewable Energy Prediction using Deep Learning and Generative AI',
     date: '2024',
     category: 'IEEE · ICICNIC 2024',
-    summary: 'Forecasting solar and wind generation from ten years of NASA POWER data with LSTM, CNN, and generative AI techniques.',
+    summary: 'Forecasting solar and wind energy generation with LSTM, CNN, and generative AI techniques.',
     url: 'https://ieeexplore.ieee.org/document/10823172',
     external: true,
     readTime: 'Published paper'
