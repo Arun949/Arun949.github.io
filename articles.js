@@ -32,6 +32,17 @@ window.blogTracks = {
 
 window.blogArticles = [
   {
+    track: 'journey',
+    title: 'How to Start Researching One Topic',
+    date: '2026-11-25',
+    category: 'Research',
+    summary: 'How I turned a broad interest in sustainable energy into one research question, a dataset, and a published paper.',
+    url: 'posts/how-to-start-researching.html',
+    readTime: '7 min read',
+    image: 'assets/start-researching-cover.jpg',
+    imageAlt: 'Abstract illustration of many scattered ideas narrowing into one focused question and a solar and wind generation chart'
+  },
+  {
     track: 'research',
     title: 'Building RAG Systems You Can Trust',
     date: '2026-09-23',
