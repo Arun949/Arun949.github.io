@@ -8,8 +8,6 @@
    The GitHub token never leaves this browser except in requests to api.github.com. */
 
 const REPO = { owner: 'Arun949', name: 'Arun949.github.io', branch: 'main' };
-const SITE = 'https://arun949.github.io';
-const TRACKS = { journey: 'My journey', research: 'My research' };
 const TOKEN_KEY = 'gh-token';
 const DRAFT_KEY = 'write-draft';
 
@@ -19,193 +17,6 @@ const store = {
   set(key, value) { try { localStorage.setItem(key, value); } catch { /* unavailable */ } },
   remove(key) { try { localStorage.removeItem(key); } catch { /* unavailable */ } }
 };
-
-/* ------------------------------------------------------------------ */
-/* Helpers                                                            */
-/* ------------------------------------------------------------------ */
-const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-const slugify = text => String(text || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
-  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70).replace(/-+$/, '');
-const today = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-};
-const longDate = date => /^\d{4}-\d{2}-\d{2}$/.test(date)
-  ? new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(`${date}T12:00:00`))
-  : String(date || '');
-const readTime = markdown => `${Math.max(1, Math.round((markdown.match(/\S+/g) || []).length / 220))} min read`;
-const safeUrl = url => {
-  const trimmed = String(url || '').trim();
-  return /^(https?:\/\/|mailto:|\/|\.\.?\/|#)/i.test(trimmed) || /^[\w-]+(\/[\w.-]+)*\.(html|jpg|jpeg|png|webp|pdf)$/i.test(trimmed) ? trimmed : '#';
-};
-
-/* ------------------------------------------------------------------ */
-/* Markdown → HTML (small, safe subset)                               */
-/* ------------------------------------------------------------------ */
-function inline(text) {
-  const codes = [];
-  let out = escapeHtml(text).replace(/`([^`]+)`/g, (_, code) => { codes.push(code); return `\u0000${codes.length - 1}\u0000`; });
-  out = out
-    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, url) => `<img src="${escapeHtml(safeUrl(url.replace(/&amp;/g, '&')))}" alt="${alt}" loading="lazy">`)
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, url) => {
-      const href = safeUrl(url.replace(/&amp;/g, '&'));
-      const external = /^https?:\/\//i.test(href) && !href.startsWith(SITE);
-      return `<a href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`;
-    })
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/(^|[^*\w])\*([^*\s][^*]*?)\*(?!\w)/g, '$1<em>$2</em>')
-    .replace(/(^|[^\w])_([^_\s][^_]*?)_(?!\w)/g, '$1<em>$2</em>');
-  return out.replace(/\u0000(\d+)\u0000/g, (_, i) => `<code>${codes[Number(i)]}</code>`);
-}
-
-function markdownToHtml(source) {
-  const lines = String(source || '').replace(/\r\n?/g, '\n').split('\n');
-  const html = [];
-  let paragraph = [];
-  let list = null;
-  let leadDone = false;
-
-  const flushParagraph = () => {
-    if (!paragraph.length) return;
-    const text = inline(paragraph.join(' '));
-    html.push(leadDone ? `<p>${text}</p>` : `<p class="post-lead">${text}</p>`);
-    leadDone = true;
-    paragraph = [];
-  };
-  const flushList = () => {
-    if (!list) return;
-    html.push(`<${list.type}>${list.items.map(item => `<li>${inline(item)}</li>`).join('')}</${list.type}>`);
-    list = null;
-  };
-  const flush = () => { flushParagraph(); flushList(); };
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    if (trimmed.startsWith('```')) {
-      flush();
-      const code = [];
-      i++;
-      while (i < lines.length && !lines[i].trim().startsWith('```')) { code.push(lines[i]); i++; }
-      html.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);
-      continue;
-    }
-    if (!trimmed) { flush(); continue; }
-
-    const heading = trimmed.match(/^(#{1,3})\s+(.*)$/);
-    if (heading) {
-      flush();
-      const level = heading[1].length === 3 ? 'h3' : 'h2';
-      html.push(`<${level}>${inline(heading[2])}</${level}>`);
-      continue;
-    }
-    if (trimmed.startsWith('>')) {
-      flush();
-      const quote = [trimmed.replace(/^>\s?/, '')];
-      while (i + 1 < lines.length && lines[i + 1].trim().startsWith('>')) { i++; quote.push(lines[i].trim().replace(/^>\s?/, '')); }
-      html.push(`<p class="post-callout">${inline(quote.join(' '))}</p>`);
-      continue;
-    }
-    const bullet = trimmed.match(/^[-*]\s+(.*)$/);
-    const numbered = trimmed.match(/^\d+[.)]\s+(.*)$/);
-    if (bullet || numbered) {
-      flushParagraph();
-      const type = bullet ? 'ul' : 'ol';
-      if (list && list.type !== type) flushList();
-      if (!list) list = { type, items: [] };
-      list.items.push((bullet || numbered)[1]);
-      continue;
-    }
-    if (/^!\[[^\]]*\]\([^)]+\)$/.test(trimmed)) {
-      flush();
-      html.push(`<figure class="post-figure">${inline(trimmed)}</figure>`);
-      continue;
-    }
-    if (list) flushList();
-    paragraph.push(trimmed);
-  }
-  flush();
-  return html.join('\n        ');
-}
-
-/* ------------------------------------------------------------------ */
-/* Article page template                                              */
-/* ------------------------------------------------------------------ */
-function renderPostPage(post, bodyHtml) {
-  const url = `${SITE}/posts/${post.slug}.html`;
-  const image = post.image ? `${SITE}/${post.image}` : `${SITE}/assets/social-preview.jpg?v=2`;
-  const trackLinks = post.tracks.map(t => `<a href="../blog.html#${t}">${TRACKS[t]}</a>`).join(' · ');
-  const eyebrow = [trackLinks, escapeHtml(post.category), escapeHtml(post.readTime)].filter(Boolean).join(' / ');
-  const backTrack = post.tracks.length === 1 ? post.tracks[0] : null;
-  const title = escapeHtml(post.title);
-  const summary = escapeHtml(post.summary);
-  const jsonLd = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.summary,
-    image,
-    datePublished: post.date,
-    ...(post.updated ? { dateModified: post.updated } : {}),
-    author: { '@type': 'Person', name: 'Arunkumar Aluru', url: `${SITE}/` },
-    mainEntityOfPage: url
-  }, null, 2).replace(/</g, '\\u003c').split('\n').join('\n  ');
-  const cover = post.image
-    ? `\n      <figure class="post-cover"><img src="../${escapeHtml(post.image)}" alt="${escapeHtml(post.imageAlt)}" width="${post.imageWidth || 1400}" height="${post.imageHeight || 788}" fetchpriority="high"></figure>`
-    : '';
-  const version = '20261135';
-
-  return `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="${summary}">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#e9e7df" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111b1a" media="(prefers-color-scheme: dark)">
-  <meta name="color-scheme" content="light dark">
-  <link rel="canonical" href="${url}">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="${url}">
-  <meta property="og:title" content="${title} | Arunkumar Aluru">
-  <meta property="og:description" content="${summary}">
-  <meta property="og:image" content="${escapeHtml(image)}">
-  <meta property="article:published_time" content="${post.date}">
-  <meta property="article:author" content="Arunkumar Aluru">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="${escapeHtml(image)}">
-  <title>${title} | Arunkumar Aluru</title>
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=${version}">
-  <script type="application/ld+json">
-  ${jsonLd}
-  </script>
-</head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <div class="reading-progress" aria-hidden="true"></div>
-  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a><div class="nav-end"><a class="nav-back post-edit" href="../write.html?edit=${post.slug}" hidden>Edit</a><a class="nav-back" href="../blog.html">My Blog</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
-  <main id="main-content">
-    <article class="post container">
-      <header class="post-header"><p class="eyebrow">${eyebrow}</p><h1>${title}</h1>${summary ? `<p class="post-dek">${summary}</p>` : ''}<p class="post-meta">${longDate(post.date)}${post.updated && post.updated !== post.date ? ` · Updated ${longDate(post.updated)}` : ''} · Arunkumar Aluru</p></header>${cover}
-      <div class="post-body">
-        ${bodyHtml}
-        <a class="post-back" href="../blog.html${backTrack ? `#${backTrack}` : ''}">← More from ${backTrack ? TRACKS[backTrack].toLowerCase() : 'my blog'}</a>
-      </div>
-    </article>
-  </main>
-  <footer class="footer container"><span>© <span data-year>2026</span> Arunkumar Aluru</span><a href="../blog.html">More articles</a></footer>
-  <script src="../script.js?v=${version}"></script>
-</body>
-</html>
-`;
-}
 
 /* ------------------------------------------------------------------ */
 /* GitHub API                                                         */
@@ -270,22 +81,6 @@ const friendlyError = error => {
 };
 
 /* ------------------------------------------------------------------ */
-/* Sitemap                                                            */
-/* ------------------------------------------------------------------ */
-const sitemapEntry = (slug, date) => `  <url>
-    <loc>${SITE}/posts/${slug}.html</loc>
-    <lastmod>${date}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-`;
-const removeFromSitemap = (xml, slug) => xml.replace(new RegExp(`  <url>\\s*<loc>${SITE.replace(/\./g, '\\.')}/posts/${slug}\\.html</loc>[\\s\\S]*?</url>\\n?`, 'g'), '');
-const upsertSitemap = (xml, slug, date) => {
-  const base = removeFromSitemap(xml || '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>\n', slug);
-  return base.replace('</urlset>', `${sitemapEntry(slug, date)}</urlset>`);
-};
-
-/* ------------------------------------------------------------------ */
 /* Cover image: resize in the browser to a 1400px-wide JPEG           */
 /* ------------------------------------------------------------------ */
 let cover = null; // { base64, dataUrl, width, height }
@@ -318,7 +113,7 @@ const prepareCover = file => new Promise((resolve, reject) => {
 /* ------------------------------------------------------------------ */
 const form = $('#post-form');
 const fields = {
-  title: $('#title'), category: $('#category'), slug: $('#slug'), summary: $('#summary'),
+  title: $('#title'), category: $('#category'), slug: $('#slug'), summary: $('#summary'), dek: $('#dek'),
   coverAlt: $('#cover-alt'), body: $('#body'), cover: $('#cover')
 };
 let editing = null;      // the article entry being edited, or null for a new post
@@ -327,13 +122,13 @@ let articles = [];
 
 const selectedTracks = () => [...form.querySelectorAll('input[name="tracks"]:checked')].map(input => input.value);
 const setTracks = list => form.querySelectorAll('input[name="tracks"]').forEach(input => { input.checked = list.includes(input.value); });
-const currentSlug = () => editing ? editing.slug : (slugify(fields.slug.value) || slugify(fields.title.value));
+const currentSlug = () => editing ? editing.slug : (slugify(fields.slug.value) || slugify(plainTitle(fields.title.value)));
 
 const updatePreview = () => {
   const tracksChosen = selectedTracks();
   $('#pv-eyebrow').textContent = [tracksChosen.map(t => TRACKS[t]).join(' · '), fields.category.value.trim(), readTime(fields.body.value)].filter(Boolean).join(' / ');
-  $('#pv-title').textContent = fields.title.value.trim() || 'Your title';
-  $('#pv-summary').textContent = fields.summary.value.trim();
+  $('#pv-title').innerHTML = escapeHtml(fields.title.value.trim() || 'Your title').replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  $('#pv-summary').textContent = fields.dek.value.trim() || fields.summary.value.trim();
   $('#pv-body').innerHTML = markdownToHtml(fields.body.value) || '<p class="writer-muted">Your post will appear here as you write.</p>';
   const coverSrc = cover?.dataUrl || (editing?.image ? editing.image : '');
   $('#pv-cover').hidden = !coverSrc;
@@ -345,7 +140,7 @@ const saveDraft = () => {
   store.set(DRAFT_KEY, JSON.stringify({
     editingSlug: editing?.slug || null,
     title: fields.title.value, category: fields.category.value, slug: fields.slug.value,
-    summary: fields.summary.value, coverAlt: fields.coverAlt.value, body: fields.body.value,
+    summary: fields.summary.value, dek: fields.dek.value, coverAlt: fields.coverAlt.value, body: fields.body.value,
     tracks: selectedTracks(), savedAt: Date.now()
   }));
   $('#autosave').textContent = `Draft saved in this browser at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
@@ -356,6 +151,7 @@ const fillForm = data => {
   fields.category.value = data.category || '';
   fields.slug.value = data.slug || '';
   fields.summary.value = data.summary || '';
+  fields.dek.value = data.dek || '';
   fields.coverAlt.value = data.coverAlt ?? data.imageAlt ?? '';
   fields.body.value = data.body || '';
   setTracks(data.tracks?.length ? data.tracks : ['journey']);
@@ -522,7 +318,9 @@ const publish = async () => {
     const entry = {
       slug,
       tracks: tracksChosen,
-      title,
+      title: plainTitle(title),
+      ...(title.includes('*') ? { titleMarkup: title } : {}),
+      ...(fields.dek.value.trim() ? { dek: fields.dek.value.trim() } : {}),
       date,
       ...(editing ? { updated: today() } : {}),
       category: fields.category.value.trim(),
@@ -544,7 +342,7 @@ const publish = async () => {
 
     const updatedList = [entry, ...current.filter(a => a.url !== entry.url)]
       .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-    const source = { title, tracks: tracksChosen, category: entry.category, summary: entry.summary, imageAlt: entry.imageAlt || '', body: fields.body.value };
+    const source = { title, tracks: tracksChosen, category: entry.category, summary: entry.summary, dek: fields.dek.value.trim(), imageAlt: entry.imageAlt || '', body: fields.body.value };
     const sitemap = await readFile('sitemap.xml');
 
     files.push(
@@ -553,7 +351,7 @@ const publish = async () => {
       { path: 'articles.json', content: `${JSON.stringify(updatedList, null, 2)}\n` },
       { path: 'sitemap.xml', content: upsertSitemap(sitemap, slug, entry.updated || date) }
     );
-    await commitFiles(files, `${editing ? 'Update' : 'Publish'} post: ${title}`);
+    await commitFiles(files, `${editing ? 'Update' : 'Publish'} post: ${plainTitle(title)}`);
 
     articles = updatedList;
     renderPostList();
@@ -585,7 +383,7 @@ const applyFormat = kind => {
   };
   const prefixLines = make => {
     const block = value.slice(lineStart, end) || 'Item';
-    const lines = block.split('\n').map((line, i) => make(line.replace(/^(#{1,3}\s|[-*]\s|\d+[.)]\s|>\s?)/, ''), i));
+    const lines = block.split('\n').map((line, i) => make(line.replace(/^(#{1,3}\s|->\s|[-*]\s+\[[ xX]?\]\s|[-*]\s|\d+[.)]\s|>\s?)/, ''), i));
     area.setRangeText(lines.join('\n'), lineStart, end, 'end');
   };
   switch (kind) {
@@ -602,6 +400,8 @@ const applyFormat = kind => {
     case 'list': prefixLines(line => `- ${line}`); break;
     case 'numbered': prefixLines((line, i) => `${i + 1}. ${line}`); break;
     case 'quote': prefixLines(line => `> ${line}`); break;
+    case 'check': prefixLines(line => `- [ ] ${line}`); break;
+    case 'steps': prefixLines(line => `-> ${line.includes(':') ? line : `Step: ${line}`}`); break;
     default: break;
   }
   area.focus();
@@ -672,7 +472,7 @@ $('#disconnect').addEventListener('click', () => {
 /* Wire up the form                                                   */
 /* ------------------------------------------------------------------ */
 fields.title.addEventListener('input', () => {
-  if (!slugTouched && !editing) fields.slug.value = slugify(fields.title.value);
+  if (!slugTouched && !editing) fields.slug.value = slugify(plainTitle(fields.title.value));
 });
 fields.slug.addEventListener('input', () => { slugTouched = true; });
 fields.slug.addEventListener('blur', () => { if (!editing) fields.slug.value = slugify(fields.slug.value); updatePreview(); });

@@ -16,6 +16,8 @@ blog.html                  "Let's talk about" blog: My journey and My research t
 posts/*.html               One file per article
 articles.json              Blog article list, written by the editor
 write.html, write.js       Private editor that publishes posts to this repository
+write-core.js              Markdown + article template, shared by the editor and scripts/build-posts.js
+posts/src/*.json           Editable source for each post
 blog.js                    Renders the blog index
 script.js                  Theme toggle, mobile menu, active nav, scroll reveal, reading progress, contact form
 styles.css                 Design tokens (light + dark) and all page styles
@@ -41,7 +43,7 @@ Use the private editor at [`/write.html`](https://arun949.github.io/write.html) 
 3. **Publish.** One commit adds `posts/<slug>.html`, `posts/src/<slug>.json` (the editable source), the cover in `assets/posts/`, and updates `articles.json` and `sitemap.xml`. GitHub Pages deploys it in about a minute.
 4. **Edit or remove** posts from the "Your posts" list, or with the **Edit** link on any post written in the editor.
 
-Posts written before the editor existed (`building-rag-systems`, `how-to-start-researching`) are hand-made HTML and can be removed but not edited there.
+All posts, including the first two, have editable sources in `posts/src/`. If the article template in `write-core.js` changes, run `node scripts/build-posts.js` to rebuild every post page from its source.
 
 ## Local preview
 

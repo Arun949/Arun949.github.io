@@ -63,7 +63,7 @@
 
       <div class="writer-grid">
         <form class="writer-form" id="post-form" novalidate>
-          <div class="form-field"><label for="title">Title</label><input id="title" name="title" type="text" required maxlength="140" placeholder="What is this post about?"></div>
+          <div class="form-field"><label for="title">Title</label><input id="title" name="title" type="text" required maxlength="140" placeholder="What is this post about?" aria-describedby="title-hint"><small class="field-hint" id="title-hint">Tip: wrap words in *asterisks* to show them in green italics.</small></div>
 
           <fieldset class="writer-tracks">
             <legend>Show this post in</legend>
@@ -75,6 +75,8 @@
             <div class="form-field"><label for="category">Topic</label><input id="category" name="category" type="text" maxlength="40" placeholder="e.g. Generative AI"></div>
             <div class="form-field"><label for="slug">Web address</label><input id="slug" name="slug" type="text" maxlength="80" spellcheck="false" aria-describedby="slug-hint"><small class="field-hint" id="slug-hint">arun949.github.io/posts/<span id="slug-preview">…</span>.html</small></div>
           </div>
+
+          <div class="form-field"><label for="dek">Subtitle <span class="writer-muted">(optional)</span></label><textarea id="dek" name="dek" rows="2" maxlength="400" placeholder="A longer intro shown under the title. Leave empty to use the summary."></textarea></div>
 
           <div class="form-field"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="2" maxlength="240" placeholder="One or two sentences shown on the blog card and in link previews."></textarea></div>
 
@@ -94,6 +96,8 @@
               <button type="button" data-md="list">List</button>
               <button type="button" data-md="numbered">1. List</button>
               <button type="button" data-md="quote">Highlight</button>
+              <button type="button" data-md="check">Checklist</button>
+              <button type="button" data-md="steps">Steps</button>
               <button type="button" data-md="code">Code</button>
             </div>
             <textarea id="body" name="body" rows="22" required spellcheck="true" placeholder="Start writing. Leave an empty line between paragraphs."></textarea>
@@ -108,6 +112,8 @@
               <div><dt><code>[text](https://…)</code></dt><dd>Link</dd></div>
               <div><dt><code>- item</code> or <code>1. item</code></dt><dd>Lists, one item per line</dd></div>
               <div><dt><code>&gt; text</code></dt><dd>Highlighted note</dd></div>
+              <div><dt><code>- [ ] item</code></dt><dd>Checklist with square markers</dd></div>
+              <div><dt><code>-&gt; Label: text</code></dt><dd>Narrowing steps, one per line (the last one is highlighted)</dd></div>
               <div><dt><code>![description](https://…)</code></dt><dd>Image from a link</dd></div>
               <div><dt><code>```</code> … <code>```</code></dt><dd>Code block</dd></div>
             </dl>
@@ -136,6 +142,7 @@
     </section>
   </main>
   <script src="script.js?v=20261135"></script>
-  <script src="write.js?v=20261135"></script>
+  <script src="write-core.js?v=20261136"></script>
+  <script src="write.js?v=20261136"></script>
 </body>
 </html>
