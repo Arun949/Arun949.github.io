@@ -1,69 +1,52 @@
-# Arunkumar Aluru - AI Engineer Portfolio
+# Arunkumar Aluru — Portfolio
 
-A premium, high-performance portfolio website engineered for an AI & ML specialist. This site combines cutting-edge visual aesthetics with optimized technical performance to showcase advanced engineering projects.
+Personal site and blog of Arunkumar Aluru, AI Engineer Intern at Matvi Consulting and Master's student in Artificial Intelligence Systems at EPITA.
 
-## 🚀 Live Demo
-[View Portfolio](https://Arun949.github.io)
+**Live:** [arun949.github.io](https://arun949.github.io)
 
-## ✨ Creative & Technical Highlights
+## Stack
 
-### 🎨 Immersive Visual Experience
-- **Parallax 3D Landscapes**: Multi-layered background system using high-end AI-generated assets that create a deep sense of spatial immersion.
-- **Dynamic Hero Background**: A futuristic 3D data-city visualization that reacts to mouse movements with sub-pixel precision.
-- **Neural About Section**: Custom-designed 3D neural network brain visualization integrated into the "About Me" section.
-- **Glassmorphism 2.0**: Advanced UI components with blurred surfaces, "magnetic" glow effects that follow the cursor, and tiered depth shadows.
-- **Micro-Animations**: Staggered reveal animations and interactive node "particles" that bring the site to life as you navigate.
+Plain HTML, CSS, and JavaScript served by GitHub Pages. There is no build step and no dependencies: edit a file, push to `main`, and Pages deploys it.
 
-### ⚡ Performance Engineering
-- **Ultra-Smooth Scrolling**: Custom-built scroll system using `requestAnimationFrame` and hardware acceleration hints (`will-change`) for a jitter-free 60fps experience.
-- **Optimized Asset Delivery**: Strategic use of CSS gradients and optimized SVG particles to maintain high visual fidelity with minimal payload.
-- **Cross-Browser Precision**: Standardized implementations of `background-clip` and other modern CSS properties for consistent rendering across Chrome, Safari, and Firefox.
-
-## 📁 Project Architecture
+## Structure
 
 ```
-portfolio/
-├── assets/             # AI-generated imagery and professional assets
-├── index.html          # Semantic HTML5 structure with interactive layers
-├── styles.css           # Advanced CSS system (Design Tokens, Parallax, Glassmorphism)
-├── script.js            # High-performance JS engine (Scroll, Mouse-Follow, Parallax)
-└── README.md           # Technical documentation
+index.html                 Portfolio: hero, profile, journey, toolkit, work, blog preview, research, contact
+blog.html                  Blog index, rendered from articles.js
+posts/*.html               One file per article
+articles.js                Blog article list (title, date, summary, cover)
+blog.js                    Renders the blog index
+script.js                  Theme toggle, mobile menu, active nav, scroll reveal, reading progress, contact form
+styles.css                 Design tokens (light + dark) and all page styles
+404.html                   Not-found page
+assets/                    Portrait, blog covers, social preview image, favicon
+sitemap.xml, robots.txt    Search engine hints
 ```
 
-## 🛠️ Tech Stack
+## Features
 
-- **Core**: HTML5, CSS3, ES6+ JavaScript
-- **Performance**: requestAnimationFrame, hardware acceleration, IntersectionObserver
-- **Design**: AI-driven asset generation (Gemini-AI), Glassmorphism, Responsive Grid/Flexbox
-- **Icons**: Font Awesome 6.0 (High-fidelity icons)
+- Light and dark themes that follow the system setting, with a toggle that remembers the visitor's choice
+- Section-aware navigation and a gentle scroll reveal that switches off under `prefers-reduced-motion`
+- Accessible by default: skip link, visible focus rings, labelled form fields, keyboard-closable menu
+- Structured data (`Person`, `BlogPosting`), Open Graph and Twitter cards, canonical URLs, sitemap
+- Mail-app contact form with a honeypot and inline validation; no third-party services or cookies
 
-## 📱 Sections Included
+## Writing a new post
 
-1. **Hero with Live Background** - High-impact introduction with interactive 3D elements.
-2. **Interactive About Me** - High-end visualization of engineering background.
-3. **Dynamic Skills System** - Categorized technical stack with a custom tech-pattern background.
-4. **Project Showcase** - Beautiful cards with hardware-accelerated hover effects and direct GitHub links.
-5. **Verified Publications** - IEEE-linked research showcase with restored redirection layers.
-6. **Career Timeline** - Immersive professional history tracking.
-7. **Contact Hub** - Professional reach-out section with updated global contact details.
+1. Copy `posts/building-rag-systems.html` to `posts/<slug>.html` and replace the content, metadata, and JSON-LD.
+2. Add a cover image to `assets/` (1400×788 works well).
+3. Add an entry to `articles.js`.
+4. Add the URL to `sitemap.xml`.
+5. Optionally feature it in the "My Blog" section of `index.html`.
 
-## � Deployment
+## Local preview
 
-The site is optimized for **GitHub Pages**.
+```bash
+python3 -m http.server 8000
+```
 
-1. Fork/Clone the repository.
-2. Ensure assets are in the `/assets` directory.
-3. Push to `main` and enable GitHub Pages in settings.
+Then open <http://localhost:8000>.
 
-## 📧 Contact & Networking
+## Design rules
 
-- **Email:** aluruarunkumar19@gmail.com
-- **Phone:** +33 766977633
-- **LinkedIn:** [linkedin.com/in/arunkumaraluru](https://www.linkedin.com/in/arunkumaraluru/)
-- **GitHub:** [github.com/Arun949](https://github.com/Arun949)
-
----
-
-**Engineered with ❤️ by Arunkumar Aluru**
-
-*Last Technical Update: February 2025*
+See `AGENTS.md`. In short: editorial serif headings, mono labels, paper-and-teal palette, no gradients, drop shadows, neon, icon libraries, or animated arrows.
