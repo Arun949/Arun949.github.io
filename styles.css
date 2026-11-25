@@ -363,3 +363,8 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
 .article-card { border: 1px solid var(--ink); transition: background-color .2s, border-color .2s; }
 .article-card:hover { border-color: var(--acid); }
 @media (max-width: 650px) { .article-list { gap: 1.25rem; } }
+
+/* ---- Contact form feedback ---- */
+.form-status[data-state="success"] { padding: .8rem 1rem; border-left: 2px solid var(--signal); background: var(--panel); color: var(--ink); }
+.form-status[data-state="error"] { color: var(--acid); }
+.contact-form button[disabled] { opacity: .65; cursor: progress; }

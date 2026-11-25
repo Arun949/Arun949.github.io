@@ -152,12 +152,27 @@ document.querySelectorAll('.copy-email').forEach(button => {
   });
 });
 
-/* Contact form: opens the visitor's email app with the message filled in */
+/* Contact form.
+   With a Web3Forms access key the message is delivered straight to the inbox.
+   The key is public by design (it can only send mail to its owner's address).
+   Without a key, or if sending fails, it falls back to opening the visitor's email app. */
+const FORM_ACCESS_KEY = '';
+const CONTACT_EMAIL = 'aluruarunkumar19@gmail.com';
 const contactForm = document.querySelector('#contact-form');
 const formStatus = document.querySelector('#form-status');
 const formLoadedAt = Date.now();
 
-contactForm?.addEventListener('submit', event => {
+const setFormStatus = (text, state = '') => {
+  formStatus.textContent = text;
+  formStatus.dataset.state = state;
+};
+const openMailApp = (name, email, message) => {
+  const subject = encodeURIComponent(`Portfolio message from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+};
+
+contactForm?.addEventListener('submit', async event => {
   event.preventDefault();
   const formData = new FormData(contactForm);
   const name = formData.get('name').trim();
@@ -166,7 +181,7 @@ contactForm?.addEventListener('submit', event => {
   const honeypot = formData.get('company').trim();
 
   if (honeypot || Date.now() - formLoadedAt < 2500) {
-    formStatus.textContent = 'Unable to send this message. Please use the email link below.';
+    setFormStatus('Unable to send this message. Please use the email link below.', 'error');
     return;
   }
 
@@ -178,13 +193,46 @@ contactForm?.addEventListener('submit', event => {
   fields.forEach(([id, ok]) => contactForm.querySelector(`#${id}`).setAttribute('aria-invalid', String(!ok)));
   const firstInvalid = fields.find(([, ok]) => !ok);
   if (firstInvalid) {
-    formStatus.textContent = 'Please enter your name, a valid email address, and a message of at least 20 characters.';
+    setFormStatus('Please enter your name, a valid email address, and a message of at least 20 characters.', 'error');
     contactForm.querySelector(`#${firstInvalid[0]}`).focus();
     return;
   }
 
-  const subject = encodeURIComponent(`Portfolio message from ${name}`);
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  formStatus.textContent = 'Opening your email app with your message.';
-  window.location.href = `mailto:aluruarunkumar19@gmail.com?subject=${subject}&body=${body}`;
+  if (!FORM_ACCESS_KEY) {
+    setFormStatus('Opening your email app with your message.');
+    openMailApp(name, email, message);
+    return;
+  }
+
+  const button = contactForm.querySelector('button[type="submit"]');
+  const label = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Sending…';
+  setFormStatus('');
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: FORM_ACCESS_KEY,
+        subject: `Portfolio message from ${name}`,
+        from_name: 'arun949.github.io',
+        name,
+        email,
+        replyto: email,
+        message,
+        botcheck: ''
+      })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.success === false) throw new Error(result.message || `HTTP ${response.status}`);
+    contactForm.reset();
+    contactForm.querySelectorAll('[aria-invalid]').forEach(field => field.removeAttribute('aria-invalid'));
+    setFormStatus(`Thank you, ${name.split(' ')[0]}! Your message has been sent. I'll reply to ${email} soon.`, 'success');
+  } catch {
+    setFormStatus('Sorry, the message could not be sent right now. Please try again, or email me directly using the address below.', 'error');
+  } finally {
+    button.disabled = false;
+    button.textContent = label;
+  }
 });
