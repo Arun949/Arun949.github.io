@@ -334,3 +334,11 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
   .writer-post-list li { flex-direction: column; align-items: flex-start; }
 }
 .writer-account[hidden], .writer-page [hidden] { display: none !important; }
+
+/* ---- Back arrow (every page except home) ---- */
+.nav-start { display: flex; align-items: center; gap: .85rem; }
+.back-link { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--line); color: var(--ink); transition: border-color .2s, color .2s; }
+.back-link:hover { border-color: var(--acid); color: var(--acid); }
+.back-link svg { display: block; }
+.error-page { display: flex; flex-direction: column; place-items: initial; }
+.error-page .error-main { margin-block: auto; }

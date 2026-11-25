@@ -4,7 +4,7 @@
     "tracks": [
       "journey"
     ],
-    "title": "How to start researching *one topic.*",
+    "title": "How to Start Researching One Topic",
     "date": "2026-11-25",
     "updated": "2026-11-25",
     "category": "Research",
@@ -15,7 +15,9 @@
     "image": "assets/start-researching-cover.jpg",
     "imageAlt": "Abstract illustration of many scattered ideas narrowing into one focused question and a solar and wind generation chart",
     "imageWidth": 1400,
-    "imageHeight": 788
+    "imageHeight": 788,
+    "titleMarkup": "How to start researching *one topic.*",
+    "dek": "Every research project I have done began the same way: with a subject far too big to study. Mine was sustainable energy. This is how I turned it into one question, one dataset, and eventually a published paper."
   },
   {
     "tracks": [

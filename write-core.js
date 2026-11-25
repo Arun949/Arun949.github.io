@@ -2,6 +2,8 @@
    Markdown → HTML, the article page template, and sitemap helpers. */
 
 const SITE = 'https://arun949.github.io';
+/* Bump this (and editor-version.json) whenever the editor or the article template changes. */
+const EDITOR_VERSION = '20261138';
 const TRACKS = { journey: 'My journey', research: 'My research' };
 
 /* ------------------------------------------------------------------ */
@@ -165,7 +167,7 @@ function renderPostPage(post, bodyHtml) {
   const cover = post.image
     ? `\n      <figure class="post-cover"><img src="../${escapeHtml(post.image)}" alt="${escapeHtml(post.imageAlt)}" width="${post.imageWidth || 1400}" height="${post.imageHeight || 788}" fetchpriority="high"></figure>`
     : '';
-  const version = '20261136';
+  const version = EDITOR_VERSION;
 
   return `<!doctype html>
 <html lang="en">
@@ -202,7 +204,7 @@ function renderPostPage(post, bodyHtml) {
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="reading-progress" aria-hidden="true"></div>
-  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a><div class="nav-end"><a class="nav-back post-edit" href="../write.html?edit=${post.slug}" hidden>Edit</a><a class="nav-back" href="../blog.html">My Blog</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
+  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><div class="nav-start"><a class="back-link" href="../blog.html${backTrack ? `#${backTrack}` : ''}" data-back aria-label="Go back"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a></div><div class="nav-end"><a class="nav-back post-edit" href="../write.html?edit=${post.slug}" hidden>Edit</a><a class="nav-back" href="../blog.html">My Blog</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
   <main id="main-content">
     <article class="post container">
       <header class="post-header"><p class="eyebrow">${eyebrow}</p><h1>${titleHtml}</h1>${dek ? `<p class="post-dek">${dek}</p>` : ''}<p class="post-meta">${longDate(post.date)}${post.updated && post.updated !== post.date ? ` · Updated ${longDate(post.updated)}` : ''} · Arunkumar Aluru</p></header>${cover}
@@ -237,5 +239,5 @@ const upsertSitemap = (xml, slug, date) => {
 
 
 if (typeof module !== 'undefined') {
-  module.exports = { SITE, TRACKS, titleCase, escapeHtml, slugify, today, longDate, readTime, safeUrl, inline, markdownToHtml, renderPostPage, sitemapEntry, removeFromSitemap, upsertSitemap, plainTitle };
+  module.exports = { SITE, EDITOR_VERSION, TRACKS, titleCase, escapeHtml, slugify, today, longDate, readTime, safeUrl, inline, markdownToHtml, renderPostPage, sitemapEntry, removeFromSitemap, upsertSitemap, plainTitle };
 }

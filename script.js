@@ -90,6 +90,16 @@ if (progress && article) {
   update();
 }
 
+/* Back arrow: return to the previous page on this site, otherwise go to the page's parent */
+document.querySelectorAll('[data-back]').forEach(link => link.addEventListener('click', event => {
+  let cameFromSite = false;
+  try { cameFromSite = Boolean(document.referrer) && new URL(document.referrer).origin === location.origin; } catch { /* ignore */ }
+  if (cameFromSite && history.length > 1) {
+    event.preventDefault();
+    history.back();
+  }
+}));
+
 /* Writer tools: only shown in a browser connected on the Write page */
 if (storage.get('gh-token')) {
   document.querySelectorAll('.write-link, .post-edit').forEach(node => { node.hidden = false; });

@@ -74,6 +74,7 @@ const commitFiles = async (files, message) => {
 };
 
 const friendlyError = error => {
+  if (error instanceof OutdatedEditor) return 'The editor was updated since you opened this page. Your draft is saved: reload the page (Cmd+R or Ctrl+R) and press Publish again.';
   if (error.status === 401) return 'GitHub did not accept the token. It may have expired: disconnect and connect again with a new one.';
   if (error.status === 403 || error.status === 404) return 'The token cannot write to the website repository. Check that it has access to Arun949.github.io with Contents set to Read and write.';
   if (error.status === 409 || error.status === 422) return 'The website changed while you were publishing. Please press Publish again.';
@@ -252,12 +253,22 @@ const openForEdit = async slug => {
   }
 };
 
+/* Refuse to publish from a tab that loaded an older version of the editor:
+   an outdated template could overwrite posts with broken formatting. */
+class OutdatedEditor extends Error {}
+const ensureCurrentEditor = async () => {
+  const text = await readFile('editor-version.json');
+  const live = text ? JSON.parse(text).version : EDITOR_VERSION;
+  if (live !== EDITOR_VERSION) throw new OutdatedEditor();
+};
+
 const removePost = async article => {
   const name = `"${article.title}"`;
   if (!window.confirm(`Remove ${name} from your website? It will disappear from the blog within a minute or two. (It stays in the repository's history, so it can be recovered.)`)) return;
   const status = $('#publish-status');
   status.textContent = 'Removing…';
   try {
+    await ensureCurrentEditor();
     const current = await loadArticles();
     const remaining = current.filter(a => a.url !== article.url);
     const files = [{ path: 'articles.json', content: `${JSON.stringify(remaining, null, 2)}\n` }];
@@ -306,6 +317,7 @@ const publish = async () => {
   button.disabled = true;
   status.textContent = editing ? 'Updating…' : 'Publishing…';
   try {
+    await ensureCurrentEditor();
     const current = await loadArticles();
     const existing = current.find(a => a.url === `posts/${slug}.html`);
     if (!editing && existing) {
