@@ -37,7 +37,10 @@ const render = filter => {
     }
     const chips = tracksOf(article).map(t => `<span class="track-chip">${escapeHtml(tracks[t].label)}</span>`).join('');
     const meta = [formatDate(article.date), article.readTime].filter(Boolean).join(' · ');
-    item.innerHTML = `${article.image ? `<img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.imageAlt)}" width="1400" height="788" loading="lazy">` : ''}`
+    const cover = article.image
+      ? `<img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.imageAlt)}" width="1400" height="788" loading="lazy">`
+      : `<div class="article-cover-fallback" aria-hidden="true"><span class="fallback-kind">${article.external ? 'Published paper' : escapeHtml(tracks[tracksOf(article)[0]]?.label || 'Notes')}</span><span class="fallback-title">${escapeHtml(article.category || article.title)}</span></div>`;
+    item.innerHTML = cover
       + `<div class="article-card-content">`
       + `<p class="project-number">${chips}${escapeHtml(article.category || 'Notes')}</p>`
       + `<h3>${escapeHtml(article.title)}</h3><p>${escapeHtml(article.summary)}</p>`

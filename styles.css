@@ -342,3 +342,10 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
 .back-link svg { display: block; }
 .error-page { display: flex; flex-direction: column; place-items: initial; }
 .error-page .error-main { margin-block: auto; }
+
+/* ---- Blog cards: consistent covers and labels ---- */
+.article-cover-fallback { position: relative; display: flex; flex-direction: column; justify-content: space-between; aspect-ratio: 16 / 9; padding: 1.4rem; border-bottom: 1px solid var(--ink); background: var(--night); color: var(--night-fg); overflow: hidden; }
+.article-cover-fallback::after { content: ''; position: absolute; right: 1.4rem; top: 1.4rem; width: 34%; height: 58%; border: 1px solid var(--night-line); border-top-color: var(--night-accent); border-right-color: var(--night-accent); }
+.article-card .fallback-kind { margin: 0; color: var(--night-accent); font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.article-card .fallback-title { position: relative; z-index: 1; margin: 0; max-width: 75%; padding-left: .9rem; border-left: 2px solid var(--night-accent); color: var(--night-fg); font: italic 400 clamp(1.5rem, 2.3vw, 2rem)/1.1 var(--serif); letter-spacing: -.03em; text-transform: none; }
+.article-card .project-number { text-transform: uppercase; }
