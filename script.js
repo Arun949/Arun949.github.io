@@ -156,7 +156,7 @@ document.querySelectorAll('.copy-email').forEach(button => {
    With a Web3Forms access key the message is delivered straight to the inbox.
    The key is public by design (it can only send mail to its owner's address).
    Without a key, or if sending fails, it falls back to opening the visitor's email app. */
-const FORM_ACCESS_KEY = '';
+const FORM_ACCESS_KEY = '8a3928f9-ee58-4734-b80b-27746d892e68';
 const CONTACT_EMAIL = 'aluruarunkumar19@gmail.com';
 const contactForm = document.querySelector('#contact-form');
 const formStatus = document.querySelector('#form-status');
