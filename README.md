@@ -12,7 +12,7 @@ Plain HTML, CSS, and JavaScript served by GitHub Pages. There is no build step a
 
 ```
 index.html                 Portfolio: hero, profile, journey, toolkit, work, blog preview, research, contact
-blog.html                  Blog index, rendered from articles.js
+blog.html                  "Let's talk about" blog: My journey and My research tracks, rendered from articles.js
 posts/*.html               One file per article
 articles.js                Blog article list (title, date, summary, cover)
 blog.js                    Renders the blog index
@@ -35,7 +35,7 @@ sitemap.xml, robots.txt    Search engine hints
 
 1. Copy `posts/building-rag-systems.html` to `posts/<slug>.html` and replace the content, metadata, and JSON-LD.
 2. Add a cover image to `assets/` (1400×788 works well).
-3. Add an entry to `articles.js`.
+3. Add an entry to `articles.js` with `track: 'journey'` (blogs, lessons, interests) or `track: 'research'` (research you are doing, papers, experiments). Links to other sites, such as a paper, take `external: true`.
 4. Add the URL to `sitemap.xml`.
 5. Optionally feature it in the "My Blog" section of `index.html`.
 

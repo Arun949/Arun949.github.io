@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Articles and notes by Arunkumar Aluru on AI engineering, machine learning, MLOps, and applied generative AI.">
+  <meta name="description" content="Let's talk about: blogs on Arunkumar Aluru's journey in AI engineering, and the research he is working on.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#e9e7df" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111b1a" media="(prefers-color-scheme: dark)">
@@ -12,8 +12,11 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://arun949.github.io/blog.html">
   <meta property="og:title" content="My Blog | Arunkumar Aluru">
-  <meta property="og:description" content="Notes on AI engineering, machine learning, MLOps, and applied generative AI.">
-  <meta property="og:image" content="https://arun949.github.io/assets/social-preview.jpg">
+  <meta property="og:description" content="Let's talk about my journey in AI engineering and the research I am working on.">
+  <meta property="og:image" content="https://arun949.github.io/assets/social-preview.jpg?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Arunkumar Aluru, AI Engineer, with the line Building thoughtful AI systems for real-world problems">
   <meta name="twitter:card" content="summary_large_image">
   <title>My Blog | Arunkumar Aluru</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -21,18 +24,48 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261127">
+  <link rel="stylesheet" href="styles.css?v=20261128">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><a class="wordmark" href="index.html">Arunkumar<span>.</span></a><div class="nav-end"><a class="nav-back" href="index.html">Portfolio</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
   <main id="main-content">
-    <section class="blog-hero container"><p class="eyebrow">My Blog / Field notes</p><h1>Ideas I am <em>working through.</em></h1><p>Short articles on AI engineering, machine learning, data systems, MLOps, and the lessons behind the work.</p></section>
-    <section class="blog-section container" aria-labelledby="articles-heading"><div class="blog-heading"><h2 id="articles-heading">Latest articles</h2><p id="article-count" aria-live="polite"></p></div><div class="article-list" id="article-list"></div><div class="empty-articles" id="empty-articles" hidden><p class="eyebrow">First entry pending</p><h2>New notes are on the way.</h2><p>Check back soon for practical writing on AI systems and applied research.</p></div></section>
+    <section class="blog-hero container">
+      <p class="eyebrow">My Blog</p>
+      <h1>Let's talk <em>about.</em></h1>
+      <p>Two threads run through everything I write here: the journey of building and learning, and the research questions I am working on.</p>
+      <div class="track-cards">
+        <a class="track-card" href="#journey" data-filter="journey">
+          <span class="track-index">01</span>
+          <span class="track-title">My journey</span>
+          <span class="track-summary">Blogs on what I am building, learning, and curious about, from AI engineering to life as a student in France.</span>
+          <span class="track-count" data-track-count="journey"></span>
+        </a>
+        <a class="track-card" href="#research" data-filter="research">
+          <span class="track-index">02</span>
+          <span class="track-title">My research</span>
+          <span class="track-summary">The research I am working on: questions I am investigating, experiments, results, and published papers.</span>
+          <span class="track-count" data-track-count="research"></span>
+        </a>
+      </div>
+    </section>
+    <section class="blog-section container" id="articles" aria-labelledby="articles-heading">
+      <div class="blog-heading">
+        <h2 id="articles-heading">Everything</h2>
+        <div class="blog-filters" role="group" aria-label="Filter entries">
+          <button type="button" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-filter="journey" aria-pressed="false">My journey</button>
+          <button type="button" data-filter="research" aria-pressed="false">My research</button>
+          <p id="article-count" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="article-list" id="article-list"></div>
+      <div class="empty-articles" id="empty-articles" hidden><p class="eyebrow">First entry pending</p><h2>New entries are on the way.</h2><p>Nothing in this thread yet. Check back soon.</p></div>
+    </section>
   </main>
   <footer class="footer container"><span>© <span data-year>2026</span> Arunkumar Aluru</span><a href="index.html">Return to portfolio</a></footer>
-  <script src="articles.js"></script>
-  <script src="blog.js"></script>
-  <script src="script.js?v=20261127"></script>
+  <script src="articles.js?v=20261128"></script>
+  <script src="blog.js?v=20261128"></script>
+  <script src="script.js?v=20261128"></script>
 </body>
 </html>
