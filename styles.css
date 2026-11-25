@@ -357,3 +357,9 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
 .post-body .post-actions a:hover { color: var(--paper); }
 .post-header h1.is-long { font-size: clamp(2.4rem, 4.6vw, 4.4rem); line-height: 1; }
 .writer-preview-page h1 { overflow-wrap: anywhere; }
+
+/* ---- Blog cards: separate tiles with breathing room ---- */
+.article-list { gap: 1.5rem; border: 0; }
+.article-card { border: 1px solid var(--ink); transition: background-color .2s, border-color .2s; }
+.article-card:hover { border-color: var(--acid); }
+@media (max-width: 650px) { .article-list { gap: 1.25rem; } }
