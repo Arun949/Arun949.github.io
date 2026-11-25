@@ -349,3 +349,11 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
 .article-card .fallback-kind { margin: 0; color: var(--night-accent); font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .article-card .fallback-title { position: relative; z-index: 1; margin: 0; max-width: 75%; padding-left: .9rem; border-left: 2px solid var(--night-accent); color: var(--night-fg); font: italic 400 clamp(1.5rem, 2.3vw, 2rem)/1.1 var(--serif); letter-spacing: -.03em; text-transform: none; }
 .article-card .project-number { text-transform: uppercase; }
+
+/* ---- Featured link button on posts ---- */
+.post-actions { margin: 1.6rem 0 0; }
+.post-actions-end { margin: 3rem 0 0; padding-top: 2rem; border-top: 1px solid var(--line); }
+.post-body .post-actions a { color: var(--paper); text-decoration: none; }
+.post-body .post-actions a:hover { color: var(--paper); }
+.post-header h1.is-long { font-size: clamp(2.4rem, 4.6vw, 4.4rem); line-height: 1; }
+.writer-preview-page h1 { overflow-wrap: anywhere; }

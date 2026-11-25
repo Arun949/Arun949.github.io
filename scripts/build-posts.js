@@ -24,6 +24,7 @@ for (const entry of articles) {
   entry.title = core.titleCase(src.title);
   entry.titleMarkup = src.title;
   if (src.dek) entry.dek = src.dek; else delete entry.dek;
+  if (src.linkUrl) { entry.linkUrl = src.linkUrl; entry.linkLabel = src.linkLabel || 'Open link'; } else { delete entry.linkUrl; delete entry.linkLabel; }
   entry.category = src.category;
   entry.summary = src.summary;
   if (entry.image) entry.imageAlt = src.imageAlt || entry.imageAlt;

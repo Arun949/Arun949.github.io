@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261138">
+  <link rel="stylesheet" href="styles.css?v=20261141">
 </head>
 <body class="writer-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -81,6 +81,11 @@
           <div class="form-field"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="2" maxlength="240" placeholder="One or two sentences shown on the blog card and in link previews."></textarea></div>
 
           <div class="writer-row">
+            <div class="form-field"><label for="link-url">Main link <span class="writer-muted">(optional)</span></label><input id="link-url" name="linkUrl" type="url" placeholder="https://…" aria-describedby="link-hint"><small class="field-hint" id="link-hint">Shown as a button at the top and bottom of the post, e.g. a paper or repository.</small></div>
+            <div class="form-field"><label for="link-label">Button text</label><input id="link-label" name="linkLabel" type="text" maxlength="60" placeholder="e.g. Read the paper on IEEE Xplore"></div>
+          </div>
+
+          <div class="writer-row">
             <div class="form-field"><label for="cover">Cover image <span class="writer-muted">(optional)</span></label><input id="cover" name="cover" type="file" accept="image/png,image/jpeg,image/webp"><small class="field-hint" id="cover-hint">A wide image works best. It is resized automatically.</small></div>
             <div class="form-field"><label for="cover-alt">Describe the image</label><input id="cover-alt" name="coverAlt" type="text" maxlength="200" placeholder="For screen readers"></div>
           </div>
@@ -141,8 +146,8 @@
       </div>
     </section>
   </main>
-  <script src="script.js?v=20261138"></script>
-  <script src="write-core.js?v=20261138"></script>
-  <script src="write.js?v=20261138"></script>
+  <script src="script.js?v=20261141"></script>
+  <script src="write-core.js?v=20261141"></script>
+  <script src="write.js?v=20261141"></script>
 </body>
 </html>

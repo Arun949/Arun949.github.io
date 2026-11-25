@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="My published paper on forecasting solar and wind energy production with feature selection, machine learning, an LSTM, and explainable AI.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#e9e7df" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111b1a" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://arun949.github.io/posts/renewable-energy-paper.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://arun949.github.io/posts/renewable-energy-paper.html">
+  <meta property="og:title" content="Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and Generative AI | Arunkumar Aluru">
+  <meta property="og:description" content="My published paper on forecasting solar and wind energy production with feature selection, machine learning, an LSTM, and explainable AI.">
+  <meta property="og:image" content="https://arun949.github.io/assets/renewable-energy-cover.jpg">
+  <meta property="og:image:alt" content="Illustration of solar panels and wind turbines under the sun, with a forecast chart of solar and wind generation">
+  <meta property="article:published_time" content="2024-12-17">
+  <meta property="article:author" content="Arunkumar Aluru">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://arun949.github.io/assets/renewable-energy-cover.jpg">
+  <title>Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and Generative AI | Arunkumar Aluru</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261141">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and Generative AI",
+    "description": "My published paper on forecasting solar and wind energy production with feature selection, machine learning, an LSTM, and explainable AI.",
+    "image": "https://arun949.github.io/assets/renewable-energy-cover.jpg",
+    "datePublished": "2024-12-17",
+    "author": {
+      "@type": "Person",
+      "name": "Arunkumar Aluru",
+      "url": "https://arun949.github.io/"
+    },
+    "mainEntityOfPage": "https://arun949.github.io/posts/renewable-energy-paper.html"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><div class="nav-start"><a class="back-link" href="../blog.html#research" data-back aria-label="Go back"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a></div><div class="nav-end"><a class="nav-back post-edit" href="../write.html?edit=renewable-energy-paper" hidden>Edit</a><a class="nav-back" href="../blog.html">My Blog</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
+  <main id="main-content">
+    <article class="post container">
+      <header class="post-header"><p class="eyebrow"><a href="../blog.html#research">My research</a> / IEEE · ICICNIS 2024 / 2 min read</p><h1 class="is-long">Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and <em>Generative AI.</em></h1><p class="post-dek">A summary of my first published paper, written with four co-authors: what we set out to answer, how we approached it, and what we found.</p><p class="post-meta">December 17, 2024 · Arunkumar Aluru</p><p class="post-actions"><a class="button button-solid" href="https://ieeexplore.ieee.org/document/10823172" target="_blank" rel="noopener noreferrer">Read the paper on IEEE Xplore ↗</a></p></header>
+      <figure class="post-cover"><img src="../assets/renewable-energy-cover.jpg" alt="Illustration of solar panels and wind turbines under the sun, with a forecast chart of solar and wind generation" width="1400" height="788" fetchpriority="high"></figure>
+      <div class="post-body">
+        <p class="post-lead">Solar and wind power generate electricity without greenhouse gases or other pollutants, which makes them central to moving away from fossil fuels. Their weakness is that they depend on the weather. To plan for a grid that relies on them, you need to know how much energy they are likely to produce. This paper, my first published research, set out to forecast exactly that.</p>
+        <h2>The question</h2>
+        <p>Can we forecast solar and wind energy production accurately by first finding the inputs that matter most, and can we explain how the model reaches its predictions, rather than treating it as a black box?</p>
+        <h2>The data</h2>
+        <p>We used time-series data from <a href="https://open-power-system-data.org/" target="_blank" rel="noopener noreferrer">Open Power System Data</a>, an open platform covering power systems across 37 European countries. The data was split into 80% for training and 20% for testing, and the full dataset was then used for validation.</p>
+        <h2>How we approached it</h2>
+        <p>The method moves step by step, from understanding the inputs to explaining the predictions:</p>
+        <ol class="post-ladder"><li><span>Select</span>Identify the attributes that contribute most to energy production, using ARIMA, Ridge, and Lasso regression</li><li><span>Compare</span>Build classical machine learning models (decision trees, random forests, and support vector machines) to validate the results</li><li><span>Model</span>Use an LSTM, a deep learning model designed for sequences over time, to capture patterns in the time series</li><li><span>Explain</span>Apply Explainable AI (the LIME method) to see which inputs drove the LSTM&#39;s individual predictions</li></ol>
+        <p>An important part of the work was improving the model&#39;s performance through careful feature selection, rather than relying on a deep learning model alone to do all the work.</p>
+        <h2>Making the predictions explainable</h2>
+        <p>Forecasts that cannot be explained are hard to trust, especially for decisions about energy infrastructure. LIME builds a simple, local approximation of the model around a single prediction, which shows which inputs pushed that prediction up or down. This gave us insight into how the LSTM was making its forecasts for specific instances, not just how accurate it was on average.</p>
+        <h2>What we found</h2>
+        <p>Using the trained models, the forecast for 2025 was:</p>
+        <ul class="post-checklist"><li><strong>Solar energy:</strong> 72,530 MW</li><li><strong>Wind energy:</strong> 45,280 MW</li></ul>
+        <p class="post-callout">The bigger lesson for me was that choosing the right inputs and being able to explain a forecast matter as much as the model itself.</p>
+        <h2>The team</h2>
+        <p>This paper was written with my co-authors Pandiselvam Pandiyarajan, S B L Akshaya, Anthapu Archana, and Akula Archana.</p>
+        <h2>Citation</h2>
+        <p>A. Arunkumar, P. Pandiyarajan, S. B. L. Akshaya, A. Archana, and A. Archana, &quot;Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and Generative AI,&quot; <em>2024 International Conference on IoT Based Control Networks and Intelligent Systems (ICICNIS)</em>, 2024. DOI: <a href="https://doi.org/10.1109/ICICNIS64247.2024.10823172" target="_blank" rel="noopener noreferrer">10.1109/ICICNIS64247.2024.10823172</a></p>
+        <p>If you want to know how this project started, read <a href="how-to-start-researching.html">How to start researching one topic</a>.</p>
+        <p class="post-actions post-actions-end"><a class="button button-solid" href="https://ieeexplore.ieee.org/document/10823172" target="_blank" rel="noopener noreferrer">Read the paper on IEEE Xplore ↗</a></p>
+        <a class="post-back" href="../blog.html#research">← More from my research</a>
+      </div>
+    </article>
+  </main>
+  <footer class="footer container"><span>© <span data-year>2026</span> Arunkumar Aluru</span><a href="../blog.html">More articles</a></footer>
+  <script src="../script.js?v=20261141"></script>
+</body>
+</html>

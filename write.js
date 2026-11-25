@@ -114,7 +114,7 @@ const prepareCover = file => new Promise((resolve, reject) => {
 /* ------------------------------------------------------------------ */
 const form = $('#post-form');
 const fields = {
-  title: $('#title'), category: $('#category'), slug: $('#slug'), summary: $('#summary'), dek: $('#dek'),
+  title: $('#title'), category: $('#category'), slug: $('#slug'), summary: $('#summary'), dek: $('#dek'), linkUrl: $('#link-url'), linkLabel: $('#link-label'),
   coverAlt: $('#cover-alt'), body: $('#body'), cover: $('#cover')
 };
 let editing = null;      // the article entry being edited, or null for a new post
@@ -141,7 +141,7 @@ const saveDraft = () => {
   store.set(DRAFT_KEY, JSON.stringify({
     editingSlug: editing?.slug || null,
     title: fields.title.value, category: fields.category.value, slug: fields.slug.value,
-    summary: fields.summary.value, dek: fields.dek.value, coverAlt: fields.coverAlt.value, body: fields.body.value,
+    summary: fields.summary.value, dek: fields.dek.value, linkUrl: fields.linkUrl.value, linkLabel: fields.linkLabel.value, coverAlt: fields.coverAlt.value, body: fields.body.value,
     tracks: selectedTracks(), savedAt: Date.now()
   }));
   $('#autosave').textContent = `Draft saved in this browser at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
@@ -153,6 +153,8 @@ const fillForm = data => {
   fields.slug.value = data.slug || '';
   fields.summary.value = data.summary || '';
   fields.dek.value = data.dek || '';
+  fields.linkUrl.value = data.linkUrl || '';
+  fields.linkLabel.value = data.linkLabel || '';
   fields.coverAlt.value = data.coverAlt ?? data.imageAlt ?? '';
   fields.body.value = data.body || '';
   setTracks(data.tracks?.length ? data.tracks : ['journey']);
@@ -333,6 +335,7 @@ const publish = async () => {
       title: titleCase(title),
       titleMarkup: title,
       ...(fields.dek.value.trim() ? { dek: fields.dek.value.trim() } : {}),
+      ...(fields.linkUrl.value.trim() ? { linkUrl: fields.linkUrl.value.trim(), linkLabel: fields.linkLabel.value.trim() || 'Open link' } : {}),
       date,
       ...(editing ? { updated: today() } : {}),
       category: fields.category.value.trim(),
@@ -354,7 +357,7 @@ const publish = async () => {
 
     const updatedList = [entry, ...current.filter(a => a.url !== entry.url)]
       .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-    const source = { title, tracks: tracksChosen, category: entry.category, summary: entry.summary, dek: fields.dek.value.trim(), imageAlt: entry.imageAlt || '', body: fields.body.value };
+    const source = { title, tracks: tracksChosen, category: entry.category, summary: entry.summary, dek: fields.dek.value.trim(), linkUrl: fields.linkUrl.value.trim(), linkLabel: fields.linkLabel.value.trim(), imageAlt: entry.imageAlt || '', body: fields.body.value };
     const sitemap = await readFile('sitemap.xml');
 
     files.push(

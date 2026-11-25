@@ -3,7 +3,7 @@
 
 const SITE = 'https://arun949.github.io';
 /* Bump this (and editor-version.json) whenever the editor or the article template changes. */
-const EDITOR_VERSION = '20261138';
+const EDITOR_VERSION = '20261141';
 const TRACKS = { journey: 'My journey', research: 'My research' };
 
 /* ------------------------------------------------------------------ */
@@ -149,6 +149,11 @@ function renderPostPage(post, bodyHtml) {
   const trackLinks = post.tracks.map(t => `<a href="../blog.html#${t}">${TRACKS[t]}</a>`).join(' · ');
   const eyebrow = [trackLinks, escapeHtml(post.category), escapeHtml(post.readTime)].filter(Boolean).join(' / ');
   const backTrack = post.tracks.length === 1 ? post.tracks[0] : null;
+  const linkUrl = post.linkUrl ? safeUrl(post.linkUrl) : '';
+  const linkExternal = /^https?:\/\//i.test(linkUrl) && !linkUrl.startsWith(SITE);
+  const featuredLink = linkUrl
+    ? `<p class="post-actions"><a class="button button-solid" href="${escapeHtml(linkUrl)}"${linkExternal ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHtml(post.linkLabel || 'Open link')}${linkExternal ? ' ↗' : ''}</a></p>`
+    : '';
   const title = escapeHtml(plainTitle(post.title));
   const titleHtml = escapeHtml(post.titleMarkup || post.title).replace(/\*([^*]+)\*/g, '<em>$1</em>');
   const summary = escapeHtml(post.summary);
@@ -207,9 +212,10 @@ function renderPostPage(post, bodyHtml) {
   <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><div class="nav-start"><a class="back-link" href="../blog.html${backTrack ? `#${backTrack}` : ''}" data-back aria-label="Go back"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a></div><div class="nav-end"><a class="nav-back post-edit" href="../write.html?edit=${post.slug}" hidden>Edit</a><a class="nav-back" href="../blog.html">My Blog</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
   <main id="main-content">
     <article class="post container">
-      <header class="post-header"><p class="eyebrow">${eyebrow}</p><h1>${titleHtml}</h1>${dek ? `<p class="post-dek">${dek}</p>` : ''}<p class="post-meta">${longDate(post.date)}${post.updated && post.updated !== post.date ? ` · Updated ${longDate(post.updated)}` : ''} · Arunkumar Aluru</p></header>${cover}
+      <header class="post-header"><p class="eyebrow">${eyebrow}</p><h1${plainTitle(post.title).length > 60 ? ' class="is-long"' : ''}>${titleHtml}</h1>${dek ? `<p class="post-dek">${dek}</p>` : ''}<p class="post-meta">${longDate(post.date)}${post.updated && post.updated !== post.date ? ` · Updated ${longDate(post.updated)}` : ''} · Arunkumar Aluru</p>${featuredLink}</header>${cover}
       <div class="post-body">
         ${bodyHtml}
+        ${featuredLink ? featuredLink.replace('post-actions', 'post-actions post-actions-end') : ''}
         <a class="post-back" href="../blog.html${backTrack ? `#${backTrack}` : ''}">← More from ${backTrack ? TRACKS[backTrack].toLowerCase() : 'my blog'}</a>
       </div>
     </article>
