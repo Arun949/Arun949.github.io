@@ -1,5 +1,24 @@
 [
   {
+    "slug": "diffusion-energy-scenarios",
+    "tracks": [
+      "research"
+    ],
+    "title": "From One Forecast to a Thousand Futures",
+    "date": "2026-11-26",
+    "category": "Generative AI · Energy",
+    "summary": "My next research direction: using diffusion models to generate thousands of joint solar and wind scenarios, including Europe's dark, windless Dunkelflaute weeks.",
+    "url": "posts/diffusion-energy-scenarios.html",
+    "readTime": "5 min read",
+    "image": "assets/diffusion-scenarios-cover.jpg",
+    "imageAlt": "Illustration of many possible solar and wind generation paths fanning out from today, with a dark winter period highlighted where output drops close to zero",
+    "imageWidth": 1400,
+    "imageHeight": 788,
+    "editable": true,
+    "titleMarkup": "From one forecast to *a thousand futures.*",
+    "dek": "A single forecast tells you the most likely outcome. Planning a renewable grid also needs the unlikely ones. This is how I want to use diffusion models to generate realistic solar and wind scenarios, extreme winter weeks included."
+  },
+  {
     "slug": "how-to-start-researching",
     "tracks": [
       "journey"
