@@ -3,7 +3,7 @@
 
 const SITE = 'https://arun949.github.io';
 /* Bump this (and editor-version.json) whenever the editor or the article template changes. */
-const EDITOR_VERSION = '20261141';
+const EDITOR_VERSION = '20261142';
 const TRACKS = { journey: 'My journey', research: 'My research' };
 
 /* ------------------------------------------------------------------ */
@@ -145,7 +145,8 @@ const titleCase = text => plainTitle(text).replace(/\.$/, '').split(' ').map((wo
 
 function renderPostPage(post, bodyHtml) {
   const url = `${SITE}/posts/${post.slug}.html`;
-  const image = post.image ? `${SITE}/${post.image}` : `${SITE}/assets/social-preview.jpg?v=2`;
+  /* Link previews need a still image; animated SVG covers have a JPG still in socialImage. */
+  const image = post.socialImage ? `${SITE}/${post.socialImage}` : post.image && !post.image.endsWith('.svg') ? `${SITE}/${post.image}` : `${SITE}/assets/social-preview.jpg?v=2`;
   const trackLinks = post.tracks.map(t => `<a href="../blog.html#${t}">${TRACKS[t]}</a>`).join(' · ');
   const eyebrow = [trackLinks, escapeHtml(post.category), escapeHtml(post.readTime)].filter(Boolean).join(' / ');
   const backTrack = post.tracks.length === 1 ? post.tracks[0] : null;

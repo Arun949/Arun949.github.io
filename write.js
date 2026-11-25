@@ -352,7 +352,7 @@ const publish = async () => {
       entry.imageHeight = cover.height;
       files.push({ path: entry.image, base64: cover.base64 });
     } else if (editing?.image) {
-      Object.assign(entry, { image: editing.image, imageAlt: fields.coverAlt.value.trim() || editing.imageAlt, imageWidth: editing.imageWidth, imageHeight: editing.imageHeight });
+      Object.assign(entry, { image: editing.image, imageAlt: fields.coverAlt.value.trim() || editing.imageAlt, imageWidth: editing.imageWidth, imageHeight: editing.imageHeight, ...(editing.socialImage ? { socialImage: editing.socialImage } : {}) });
     }
 
     const updatedList = [entry, ...current.filter(a => a.url !== entry.url)]

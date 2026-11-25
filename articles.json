@@ -10,13 +10,14 @@
     "summary": "My next research direction: using diffusion models to generate thousands of joint solar and wind scenarios, including Europe's dark, windless Dunkelflaute weeks.",
     "url": "posts/diffusion-energy-scenarios.html",
     "readTime": "5 min read",
-    "image": "assets/diffusion-scenarios-sketch.jpg",
+    "image": "assets/diffusion-scenarios-motion.svg",
     "imageAlt": "Illustration of many possible solar and wind generation paths fanning out from today, with a dark winter period highlighted where output drops close to zero",
     "imageWidth": 1400,
     "imageHeight": 788,
     "editable": true,
     "titleMarkup": "From one forecast to *a thousand futures.*",
-    "dek": "A single forecast tells you the most likely outcome. Planning a renewable grid also needs the unlikely ones. This is how I want to use diffusion models to generate realistic solar and wind scenarios, extreme winter weeks included."
+    "dek": "A single forecast tells you the most likely outcome. Planning a renewable grid also needs the unlikely ones. This is how I want to use diffusion models to generate realistic solar and wind scenarios, extreme winter weeks included.",
+    "socialImage": "assets/diffusion-scenarios-still.jpg"
   },
   {
     "slug": "how-to-start-researching",
@@ -31,12 +32,13 @@
     "url": "posts/how-to-start-researching.html",
     "readTime": "5 min read",
     "editable": true,
-    "image": "assets/start-researching-sketch.jpg",
+    "image": "assets/start-researching-motion.svg",
     "imageAlt": "Abstract illustration of many scattered ideas narrowing into one focused question and a solar and wind generation chart",
     "imageWidth": 1400,
     "imageHeight": 788,
     "titleMarkup": "How to start researching *one topic.*",
-    "dek": "Every research project I have done began the same way: with a subject far too big to study. Mine was sustainable energy. This is how I turned it into one question, one dataset, and eventually a published paper."
+    "dek": "Every research project I have done began the same way: with a subject far too big to study. Mine was sustainable energy. This is how I turned it into one question, one dataset, and eventually a published paper.",
+    "socialImage": "assets/start-researching-still.jpg"
   },
   {
     "tracks": [
@@ -48,14 +50,15 @@
     "summary": "Six practical decisions that make retrieval-augmented generation more grounded, testable, and useful.",
     "url": "posts/building-rag-systems.html",
     "readTime": "3 min read",
-    "image": "assets/rag-systems-sketch.jpg",
+    "image": "assets/rag-systems-motion.svg",
     "imageAlt": "Abstract diagram of documents flowing through a layered retrieval system into a grounded answer",
     "slug": "building-rag-systems",
     "imageWidth": 1400,
     "imageHeight": 788,
     "titleMarkup": "Building RAG systems you can *trust.*",
     "dek": "A good RAG system is not defined by a clever prompt. It is defined by whether it retrieves the right evidence, cites it clearly, and behaves honestly when the evidence is weak.",
-    "editable": true
+    "editable": true,
+    "socialImage": "assets/rag-systems-still.jpg"
   },
   {
     "slug": "renewable-energy-paper",
@@ -68,7 +71,7 @@
     "summary": "My published paper on forecasting solar and wind energy production with feature selection, machine learning, an LSTM, and explainable AI.",
     "url": "posts/renewable-energy-paper.html",
     "readTime": "2 min read",
-    "image": "assets/renewable-energy-sketch.jpg",
+    "image": "assets/renewable-energy-motion.svg",
     "imageAlt": "Illustration of solar panels and wind turbines under the sun, with a forecast chart of solar and wind generation",
     "imageWidth": 1400,
     "imageHeight": 788,
@@ -76,6 +79,7 @@
     "titleMarkup": "Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and *Generative AI.*",
     "dek": "A summary of my first published paper, written with four co-authors: what we set out to answer, how we approached it, and what we found.",
     "linkUrl": "https://ieeexplore.ieee.org/document/10823172",
-    "linkLabel": "Read the paper on IEEE Xplore"
+    "linkLabel": "Read the paper on IEEE Xplore",
+    "socialImage": "assets/renewable-energy-still.jpg"
   }
 ]
