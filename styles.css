@@ -92,8 +92,14 @@ h1 em { color: var(--signal); font-style: italic; }
 .portrait::before, .portrait::after { content: ''; position: absolute; width: 42px; height: 42px; border-color: var(--acid); border-style: solid; }
 .portrait::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
 .portrait::after { right: -1px; bottom: -1px; border-width: 0 2px 2px 0; }
-.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 82%; filter: saturate(.65) contrast(1.08); transition: filter .5s var(--ease); }
-.portrait:hover img { filter: saturate(.9) contrast(1.04); }
+.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 50%; mix-blend-mode: multiply; filter: saturate(.85) contrast(1.04); transition: filter .5s var(--ease); }
+.portrait:hover img { filter: saturate(1) contrast(1.02); }
+:root[data-theme="dark"] .portrait img { mix-blend-mode: normal; filter: saturate(.85) brightness(.9); }
+:root[data-theme="dark"] .portrait:hover img { filter: saturate(1) brightness(.95); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .portrait img { mix-blend-mode: normal; filter: saturate(.85) brightness(.9); }
+  :root:not([data-theme="light"]) .portrait:hover img { filter: saturate(1) brightness(.95); }
+}
 .hero-note { grid-column: 1 / -1; display: grid; grid-template-columns: .6fr 1.35fr 1fr; align-items: baseline; gap: 1rem; margin-top: 2rem; padding: 1.1rem 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); font-size: .8rem; }
 .hero-note span, .hero-note small { color: var(--muted); font: 500 .68rem var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 .hero-note strong::before { content: '●'; color: var(--signal); margin-right: .55rem; }
