@@ -42,12 +42,16 @@
     "tracks": [
       "research"
     ],
-    "title": "Renewable Energy Prediction using Deep Learning and Generative AI",
+    "title": "Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and Generative AI",
     "date": "2024",
     "category": "IEEE · ICICNIC 2024",
     "summary": "Forecasting solar and wind energy generation with LSTM, CNN, and generative AI techniques.",
     "url": "https://ieeexplore.ieee.org/document/10823172",
     "external": true,
-    "readTime": "Published paper"
+    "readTime": "Published paper",
+    "image": "assets/renewable-energy-cover.jpg",
+    "imageAlt": "Illustration of solar panels and wind turbines under the sun, with a forecast chart of solar and wind generation",
+    "imageWidth": 1400,
+    "imageHeight": 788
   }
 ]
