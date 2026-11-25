@@ -12,9 +12,10 @@ Plain HTML, CSS, and JavaScript served by GitHub Pages. There is no build step a
 
 ```
 index.html                 Portfolio: hero, profile, journey, toolkit, work, blog preview, research, contact
-blog.html                  "Let's talk about" blog: My journey and My research tracks, rendered from articles.js
+blog.html                  "Let's talk about" blog: My journey and My research tracks, rendered from articles.json
 posts/*.html               One file per article
-articles.js                Blog article list (title, date, summary, cover)
+articles.json              Blog article list, written by the editor
+write.html, write.js       Private editor that publishes posts to this repository
 blog.js                    Renders the blog index
 script.js                  Theme toggle, mobile menu, active nav, scroll reveal, reading progress, contact form
 styles.css                 Design tokens (light + dark) and all page styles
@@ -33,11 +34,14 @@ sitemap.xml, robots.txt    Search engine hints
 
 ## Writing a new post
 
-1. Copy `posts/building-rag-systems.html` to `posts/<slug>.html` and replace the content, metadata, and JSON-LD.
-2. Add a cover image to `assets/` (1400×788 works well).
-3. Add an entry to `articles.js` with `track: 'journey'` (blogs, lessons, interests) or `track: 'research'` (research you are doing, papers, experiments). Links to other sites, such as a paper, take `external: true`.
-4. Add the URL to `sitemap.xml`.
-5. Optionally feature it in the "My Blog" section of `index.html`.
+Use the private editor at [`/write.html`](https://arun949.github.io/write.html) (it is not linked publicly; a **Write** button appears in the blog header once your browser is connected).
+
+1. **Connect once per browser.** Create a fine-grained GitHub token with access to only this repository and **Contents: Read and write**, then paste it on the Write page. It is stored only in that browser's local storage. Revoke it any time at github.com/settings/personal-access-tokens.
+2. **Write.** Title, which track(s) it belongs to (My journey, My research, or both), topic, summary, optional cover image, and the post in simple Markdown, with a live preview. Drafts autosave in the browser.
+3. **Publish.** One commit adds `posts/<slug>.html`, `posts/src/<slug>.json` (the editable source), the cover in `assets/posts/`, and updates `articles.json` and `sitemap.xml`. GitHub Pages deploys it in about a minute.
+4. **Edit or remove** posts from the "Your posts" list, or with the **Edit** link on any post written in the editor.
+
+Posts written before the editor existed (`building-rag-systems`, `how-to-start-researching`) are hand-made HTML and can be removed but not edited there.
 
 ## Local preview
 

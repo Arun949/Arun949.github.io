@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#e9e7df" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111b1a" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <title>Write | Arunkumar Aluru</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261135">
+</head>
+<body class="writer-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><a class="wordmark" href="index.html">Arunkumar<span>.</span></a><div class="nav-end"><a class="nav-back" href="blog.html">Blog</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
+
+  <main id="main-content" class="writer container">
+    <div class="writer-head">
+      <div>
+        <p class="eyebrow">Write / Private</p>
+        <h1>Write a <em>post.</em></h1>
+      </div>
+      <div class="writer-account" id="account" hidden>
+        <span id="account-name">Connected</span>
+        <button type="button" class="writer-link-button" id="disconnect">Disconnect</button>
+      </div>
+    </div>
+
+    <!-- Step 1: connect this browser to GitHub -->
+    <section class="writer-connect" id="connect" hidden aria-labelledby="connect-heading">
+      <h2 id="connect-heading">Connect this browser</h2>
+      <p>Publishing saves your post straight into the website's GitHub repository. To allow that, create a token that can only change this one repository, then paste it below. It is stored only in this browser.</p>
+      <ol class="writer-steps">
+        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">GitHub → New fine-grained token</a>.</li>
+        <li>Name it <code>Website writer</code> and pick an expiry (for example, one year).</li>
+        <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> → <code>Arun949/Arun949.github.io</code>.</li>
+        <li>Under <strong>Permissions → Repository permissions</strong>, set <strong>Contents</strong> to <strong>Read and write</strong>. Leave everything else as it is.</li>
+        <li>Click <strong>Generate token</strong>, copy it, and paste it here.</li>
+      </ol>
+      <form class="writer-connect-form" id="connect-form">
+        <div class="form-field"><label for="token">GitHub token</label><input id="token" type="password" autocomplete="off" spellcheck="false" required placeholder="github_pat_…"></div>
+        <button class="button button-solid" type="submit">Connect</button>
+        <p class="form-status" id="connect-status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- Step 2: write -->
+    <section id="workspace" hidden>
+      <details class="writer-posts" id="posts-panel">
+        <summary>Your posts <span id="posts-count"></span></summary>
+        <ul class="writer-post-list" id="post-list"><li class="writer-muted">Loading…</li></ul>
+      </details>
+
+      <div class="writer-mode">
+        <p id="mode-label">New post</p>
+        <button type="button" class="writer-link-button" id="new-post">Start a new post</button>
+      </div>
+
+      <div class="writer-grid">
+        <form class="writer-form" id="post-form" novalidate>
+          <div class="form-field"><label for="title">Title</label><input id="title" name="title" type="text" required maxlength="140" placeholder="What is this post about?"></div>
+
+          <fieldset class="writer-tracks">
+            <legend>Show this post in</legend>
+            <label><input type="checkbox" name="tracks" value="journey" checked> My journey</label>
+            <label><input type="checkbox" name="tracks" value="research"> My research</label>
+          </fieldset>
+
+          <div class="writer-row">
+            <div class="form-field"><label for="category">Topic</label><input id="category" name="category" type="text" maxlength="40" placeholder="e.g. Generative AI"></div>
+            <div class="form-field"><label for="slug">Web address</label><input id="slug" name="slug" type="text" maxlength="80" spellcheck="false" aria-describedby="slug-hint"><small class="field-hint" id="slug-hint">arun949.github.io/posts/<span id="slug-preview">…</span>.html</small></div>
+          </div>
+
+          <div class="form-field"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="2" maxlength="240" placeholder="One or two sentences shown on the blog card and in link previews."></textarea></div>
+
+          <div class="writer-row">
+            <div class="form-field"><label for="cover">Cover image <span class="writer-muted">(optional)</span></label><input id="cover" name="cover" type="file" accept="image/png,image/jpeg,image/webp"><small class="field-hint" id="cover-hint">A wide image works best. It is resized automatically.</small></div>
+            <div class="form-field"><label for="cover-alt">Describe the image</label><input id="cover-alt" name="coverAlt" type="text" maxlength="200" placeholder="For screen readers"></div>
+          </div>
+
+          <div class="form-field">
+            <label for="body">Post</label>
+            <div class="writer-toolbar" role="toolbar" aria-label="Formatting">
+              <button type="button" data-md="h2">Heading</button>
+              <button type="button" data-md="h3">Subheading</button>
+              <button type="button" data-md="bold"><strong>B</strong></button>
+              <button type="button" data-md="italic"><em>I</em></button>
+              <button type="button" data-md="link">Link</button>
+              <button type="button" data-md="list">List</button>
+              <button type="button" data-md="numbered">1. List</button>
+              <button type="button" data-md="quote">Highlight</button>
+              <button type="button" data-md="code">Code</button>
+            </div>
+            <textarea id="body" name="body" rows="22" required spellcheck="true" placeholder="Start writing. Leave an empty line between paragraphs."></textarea>
+          </div>
+
+          <details class="writer-help">
+            <summary>Formatting cheat sheet</summary>
+            <dl>
+              <div><dt><code>## Heading</code></dt><dd>Section heading</dd></div>
+              <div><dt><code>### Subheading</code></dt><dd>Smaller heading</dd></div>
+              <div><dt><code>**bold**</code> <code>*italic*</code></dt><dd>Emphasis</dd></div>
+              <div><dt><code>[text](https://…)</code></dt><dd>Link</dd></div>
+              <div><dt><code>- item</code> or <code>1. item</code></dt><dd>Lists, one item per line</dd></div>
+              <div><dt><code>&gt; text</code></dt><dd>Highlighted note</dd></div>
+              <div><dt><code>![description](https://…)</code></dt><dd>Image from a link</dd></div>
+              <div><dt><code>```</code> … <code>```</code></dt><dd>Code block</dd></div>
+            </dl>
+            <p>The first paragraph is shown a little larger, as an introduction.</p>
+          </details>
+
+          <div class="writer-actions">
+            <button class="button button-solid" type="submit" id="publish">Publish</button>
+            <button class="button button-outline" type="button" id="discard">Discard draft</button>
+            <p class="form-status" id="publish-status" aria-live="polite"></p>
+          </div>
+          <p class="writer-muted writer-autosave" id="autosave">Drafts save automatically in this browser.</p>
+        </form>
+
+        <aside class="writer-preview" aria-label="Live preview">
+          <p class="writer-preview-label">Preview</p>
+          <div class="writer-preview-page">
+            <p class="eyebrow" id="pv-eyebrow"></p>
+            <h1 id="pv-title">Your title</h1>
+            <p class="post-dek" id="pv-summary"></p>
+            <figure class="post-cover" id="pv-cover" hidden><img alt="" id="pv-cover-img"></figure>
+            <div class="post-body" id="pv-body"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <script src="script.js?v=20261135"></script>
+  <script src="write.js?v=20261135"></script>
+</body>
+</html>

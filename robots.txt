@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /write.html
 
 Sitemap: https://arun949.github.io/sitemap.xml

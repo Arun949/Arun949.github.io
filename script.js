@@ -90,6 +90,38 @@ if (progress && article) {
   update();
 }
 
+/* Writer tools: only shown in a browser connected on the Write page */
+if (storage.get('gh-token')) {
+  document.querySelectorAll('.write-link, .post-edit').forEach(node => { node.hidden = false; });
+}
+
+/* Homepage: feature the newest post from articles.json */
+const latestPost = document.querySelector('[data-latest-post]');
+if (latestPost) {
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  fetch('articles.json', { cache: 'no-cache' })
+    .then(response => response.ok ? response.json() : [])
+    .then(list => {
+      const newest = (Array.isArray(list) ? list : [])
+        .filter(a => a.url && !a.external)
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))[0];
+      if (!newest) return;
+      const postTracks = Array.isArray(newest.tracks) ? newest.tracks : [newest.track];
+      const label = document.querySelector('[data-latest-label]');
+      if (label) {
+        label.textContent = postTracks.length === 1
+          ? `Latest from ${postTracks[0] === 'research' ? 'my research' : 'my journey'}`
+          : 'Latest from my blog';
+      }
+      const image = newest.image || 'assets/social-preview.jpg';
+      latestPost.innerHTML = `<img src="${esc(image)}" alt="${esc(newest.imageAlt || '')}" width="1400" height="788" loading="lazy">`
+        + `<div><p class="project-number">${esc([newest.category, newest.readTime].filter(Boolean).join(' · ').toUpperCase())}</p>`
+        + `<h3>${esc(newest.title)}</h3><p>${esc(newest.summary)}</p>`
+        + `<p class="text-links"><a href="${esc(newest.url)}">Read article</a><a href="blog.html">View all posts</a></p></div>`;
+    })
+    .catch(() => { /* keep the static fallback */ });
+}
+
 /* Footer year */
 document.querySelectorAll('[data-year]').forEach(node => { node.textContent = new Date().getFullYear(); });
 
