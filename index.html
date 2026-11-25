@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261128">
+  <link rel="stylesheet" href="styles.css?v=20261130">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,9 +55,9 @@
       <div class="nav-end">
         <div class="nav-links" id="nav-links">
           <a href="#about">About</a>
+          <a href="#posts">Blog</a>
           <a href="#journey">Journey</a>
           <a href="#work">Work</a>
-          <a href="#posts">Blog</a>
           <a href="#writing">Research</a>
           <a href="#contact">Contact</a>
         </div>
@@ -104,9 +104,39 @@
       </div>
     </section>
 
+    <section class="section blog-preview-section" id="posts">
+      <div class="container">
+        <div class="section-heading reveal"><p class="eyebrow">02 / My Blog</p><h2>Let's talk about.</h2></div>
+        <div class="track-cards reveal">
+          <a class="track-card" href="blog.html#journey">
+            <span class="track-index">01</span>
+            <span class="track-title">My journey</span>
+            <span class="track-summary">Blogs on what I am building, learning, and curious about, from AI engineering to life as a student in France.</span>
+            <span class="track-count">First posts coming soon</span>
+          </a>
+          <a class="track-card" href="blog.html#research">
+            <span class="track-index">02</span>
+            <span class="track-title">My research</span>
+            <span class="track-summary">The research I am working on: questions I am investigating, experiments, results, and published papers.</span>
+            <span class="track-count">See the research</span>
+          </a>
+        </div>
+        <p class="latest-label reveal">Latest from my research</p>
+        <article class="latest-post reveal">
+          <img src="assets/rag-systems-cover.jpg" alt="Abstract diagram of documents flowing through a layered retrieval system into a grounded answer" width="1400" height="788" loading="lazy">
+          <div>
+            <p class="project-number">GENERATIVE AI · 8 MIN READ</p>
+            <h3>Building RAG systems you can trust.</h3>
+            <p>A practical guide to hybrid retrieval, citations, evaluation, observability, and human review for more dependable AI answers.</p>
+            <p class="text-links"><a href="posts/building-rag-systems.html">Read article</a><a href="blog.html">View all posts</a></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="section now-section" id="journey">
       <div class="container">
-        <div class="section-heading reveal"><p class="eyebrow">02 / Journey</p><h2>Learning in the classroom, building in the field.</h2></div>
+        <div class="section-heading reveal"><p class="eyebrow">03 / Journey</p><h2>Learning in the classroom, building in the field.</h2></div>
         <ol class="timeline">
           <li class="reveal is-current">
             <p class="timeline-when">Sep 2026 – Now</p>
@@ -130,7 +160,7 @@
 
     <section class="section skills-section" id="skills">
       <div class="container">
-        <div class="section-heading reveal"><p class="eyebrow">03 / Toolkit</p><h2>Tools I use to move from question to working system.</h2></div>
+        <div class="section-heading reveal"><p class="eyebrow">04 / Toolkit</p><h2>Tools I use to move from question to working system.</h2></div>
         <div class="skill-grid reveal">
           <article><h3>AI &amp; data</h3><p>PyTorch, TensorFlow, Keras, Scikit-learn, Pandas, NumPy, OpenCV, NVIDIA CUDA</p></article>
           <article><h3>LLM systems</h3><p>OpenAI API, RAG, FAISS, BM25, embeddings, MCP, evaluation, agent workflows</p></article>
@@ -141,7 +171,7 @@
     </section>
 
     <section class="section container" id="work">
-      <div class="section-heading reveal"><p class="eyebrow">04 / Selected work</p><h2>AI systems built with care for performance, reliability, and use.</h2></div>
+      <div class="section-heading reveal"><p class="eyebrow">05 / Selected work</p><h2>AI systems built with care for performance, reliability, and use.</h2></div>
       <div class="project-list">
         <article class="project reveal">
           <div class="project-content">
@@ -198,35 +228,6 @@
       </div>
     </section>
 
-    <section class="section blog-preview-section" id="posts">
-      <div class="container">
-        <div class="section-heading reveal"><p class="eyebrow">05 / My Blog</p><h2>Let's talk about.</h2></div>
-        <div class="track-cards reveal">
-          <a class="track-card" href="blog.html#journey">
-            <span class="track-index">01</span>
-            <span class="track-title">My journey</span>
-            <span class="track-summary">Blogs on what I am building, learning, and curious about, from AI engineering to life as a student in France.</span>
-            <span class="track-count">Read the blogs</span>
-          </a>
-          <a class="track-card" href="blog.html#research">
-            <span class="track-index">02</span>
-            <span class="track-title">My research</span>
-            <span class="track-summary">The research I am working on: questions I am investigating, experiments, results, and published papers.</span>
-            <span class="track-count">See the research</span>
-          </a>
-        </div>
-        <p class="latest-label reveal">Latest from my journey</p>
-        <article class="latest-post reveal">
-          <img src="assets/rag-systems-cover.jpg" alt="Abstract diagram of documents flowing through a layered retrieval system into a grounded answer" width="1400" height="788" loading="lazy">
-          <div>
-            <p class="project-number">GENERATIVE AI · 8 MIN READ</p>
-            <h3>Building RAG systems you can trust.</h3>
-            <p>A practical guide to hybrid retrieval, citations, evaluation, observability, and human review for more dependable AI answers.</p>
-            <p class="text-links"><a href="posts/building-rag-systems.html">Read article</a><a href="blog.html">View all posts</a></p>
-          </div>
-        </article>
-      </div>
-    </section>
 
     <section class="section publication-section" id="writing">
       <div class="container">
@@ -267,6 +268,6 @@
     <span>© <span data-year>2026</span> Arunkumar Aluru</span>
     <span class="footer-links"><a href="blog.html">Blog</a><a href="https://github.com/Arun949" target="_blank" rel="noopener noreferrer">GitHub</a><a href="#home">Back to top</a></span>
   </footer>
-  <script src="script.js?v=20261128"></script>
+  <script src="script.js?v=20261130"></script>
 </body>
 </html>

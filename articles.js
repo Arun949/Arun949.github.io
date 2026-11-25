@@ -32,7 +32,7 @@ window.blogTracks = {
 
 window.blogArticles = [
   {
-    track: 'journey',
+    track: 'research',
     title: 'Building RAG Systems You Can Trust',
     date: '2026-09-23',
     category: 'Generative AI',

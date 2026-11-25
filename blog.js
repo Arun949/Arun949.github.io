@@ -19,7 +19,8 @@ const countLabel = n => `${n} ${n === 1 ? 'entry' : 'entries'}`;
 
 // Fill in the counts on the track cards
 document.querySelectorAll('[data-track-count]').forEach(node => {
-  node.textContent = countLabel(articles.filter(a => a.track === node.dataset.trackCount).length);
+  const n = articles.filter(a => a.track === node.dataset.trackCount).length;
+  node.textContent = n ? countLabel(n) : 'First posts coming soon';
 });
 
 const render = filter => {
