@@ -519,7 +519,7 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
   .theme-toggle { min-width: 56px; padding: 0 .55rem; }
 }
 
-/* Phones: headline, photo, introduction, availability, buttons, then "Currently" */
+/* Phones: headline, photo, introduction, availability, profile links, buttons, then "Currently" */
 @media (max-width: 650px) {
   .hero { gap: 1.5rem; padding-block: 2rem 3rem; }
   .hero-copy { display: contents; }
@@ -528,7 +528,7 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
   .hero .portrait { order: 3; width: min(78%, 320px); justify-self: start; }
   .hero .intro { order: 4; margin: 0; }
   .hero .availability { order: 5; margin: 0; justify-self: start; }
-  .hero .actions { order: 6; margin: 0; }
-  .hero .hero-links { order: 7; margin: 0; }
+  .hero .hero-links { order: 6; margin: 0; }
+  .hero .actions { order: 7; margin: 0; }
   .hero-note { order: 8; margin-top: .5rem; }
 }
