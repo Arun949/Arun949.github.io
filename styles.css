@@ -532,3 +532,9 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
   .hero .actions { order: 7; margin: 0; }
   .hero-note { order: 8; margin-top: .5rem; }
 }
+
+/* Hero order on all screens: intro, availability, profile links, buttons */
+@media (min-width: 651px) {
+  .hero-copy .hero-links { margin-top: 1.2rem; }
+  .hero-copy .actions { margin-top: 1.8rem; }
+}
