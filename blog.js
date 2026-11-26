@@ -48,7 +48,12 @@ const render = filter => {
     articleList.appendChild(item);
   });
 
-  filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
+  filterButtons.forEach(control => {
+    const on = control.dataset.filter === filter;
+    if (control.tagName === 'BUTTON') control.setAttribute('aria-pressed', String(on));
+    else if (on) control.setAttribute('aria-current', 'true');
+    else control.removeAttribute('aria-current');
+  });
   document.querySelectorAll('.track-card').forEach(card => card.classList.toggle('is-active', card.dataset.filter === filter));
 };
 
