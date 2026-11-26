@@ -3,7 +3,7 @@
 
 const SITE = 'https://arun949.github.io';
 /* Bump this (and editor-version.json) whenever the editor or the article template changes. */
-const EDITOR_VERSION = '20261153';
+const EDITOR_VERSION = '20261160';
 const TRACKS = { journey: 'My journey', research: 'My research' };
 
 /* ------------------------------------------------------------------ */
