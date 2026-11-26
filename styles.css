@@ -519,9 +519,16 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
   .theme-toggle { min-width: 56px; padding: 0 .55rem; }
 }
 
-/* Phones: photo first, then the introduction */
+/* Phones: headline, photo, introduction, availability, buttons, then "Currently" */
 @media (max-width: 650px) {
-  .hero { gap: 1.75rem; padding-block: 2rem 3rem; }
-  .hero .portrait { order: -1; width: min(72%, 300px); justify-self: start; }
-  .hero-note { order: 2; }
+  .hero { gap: 1.5rem; padding-block: 2rem 3rem; }
+  .hero-copy { display: contents; }
+  .hero .eyebrow { order: 1; margin: 0; }
+  .hero h1 { order: 2; margin: 0; font-size: clamp(3.4rem, 15vw, 4.6rem); line-height: .95; }
+  .hero .portrait { order: 3; width: min(78%, 320px); justify-self: start; }
+  .hero .intro { order: 4; margin: 0; }
+  .hero .availability { order: 5; margin: 0; justify-self: start; }
+  .hero .actions { order: 6; margin: 0; }
+  .hero .hero-links { order: 7; margin: 0; }
+  .hero-note { order: 8; margin-top: .5rem; }
 }
