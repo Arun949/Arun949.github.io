@@ -518,3 +518,10 @@ h2 { font: 400 clamp(2.7rem, 5vw, 5rem)/.97 var(--serif); }
   .nav-end { gap: .6rem; }
   .theme-toggle { min-width: 56px; padding: 0 .55rem; }
 }
+
+/* Phones: photo first, then the introduction */
+@media (max-width: 650px) {
+  .hero { gap: 1.75rem; padding-block: 2rem 3rem; }
+  .hero .portrait { order: -1; width: min(72%, 300px); justify-self: start; }
+  .hero-note { order: 2; }
+}
