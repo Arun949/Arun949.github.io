@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arunkumar Aluru: My Blog</title>
+    <link>https://arun949.github.io/blog.html</link>
+    <atom:link href="https://arun949.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>My journey in AI engineering and the research I am working on.</description>
+    <language>en</language>
+    <item>
+      <title>From One Forecast to a Thousand Futures</title>
+      <link>https://arun949.github.io/posts/diffusion-energy-scenarios.html</link>
+      <guid isPermaLink="true">https://arun949.github.io/posts/diffusion-energy-scenarios.html</guid>
+      <pubDate>Thu, 26 Nov 2026 12:00:00 GMT</pubDate>
+      <description>My next research direction: using diffusion models to generate thousands of joint solar and wind scenarios, including Europe&apos;s dark, windless Dunkelflaute weeks.</description>
+      <category>My research</category>
+    </item>
+    <item>
+      <title>How to Start Researching One Topic</title>
+      <link>https://arun949.github.io/posts/how-to-start-researching.html</link>
+      <guid isPermaLink="true">https://arun949.github.io/posts/how-to-start-researching.html</guid>
+      <pubDate>Wed, 25 Nov 2026 12:00:00 GMT</pubDate>
+      <description>How I turned a broad interest in sustainable energy into one research question, a dataset, and a published paper.</description>
+      <category>My journey</category>
+    </item>
+    <item>
+      <title>Building RAG Systems You Can Trust</title>
+      <link>https://arun949.github.io/posts/building-rag-systems.html</link>
+      <guid isPermaLink="true">https://arun949.github.io/posts/building-rag-systems.html</guid>
+      <pubDate>Wed, 23 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Six practical decisions that make retrieval-augmented generation more grounded, testable, and useful.</description>
+      <category>My research</category>
+    </item>
+    <item>
+      <title>Renewable Energy Consumption on Solar and Wind Energy Prediction Using Deep Learning and Generative AI</title>
+      <link>https://arun949.github.io/posts/renewable-energy-paper.html</link>
+      <guid isPermaLink="true">https://arun949.github.io/posts/renewable-energy-paper.html</guid>
+      <pubDate>Tue, 17 Dec 2024 12:00:00 GMT</pubDate>
+      <description>My published paper on forecasting solar and wind energy production with feature selection, machine learning, an LSTM, and explainable AI.</description>
+      <category>My research</category>
+    </item>
+  </channel>
+</rss>

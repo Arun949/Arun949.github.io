@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A source-cited assistant that answers business-law questions from a 469-page textbook, with hybrid retrieval, an LLM judge for faithfulness, and a multi-agent mode with human review.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#e9e7df" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111b1a" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://arun949.github.io/projects/business-law-rag.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Arunkumar Aluru">
+  <meta property="og:url" content="https://arun949.github.io/projects/business-law-rag.html">
+  <meta property="og:title" content="Business Law RAG AI Assistant | Case study | Arunkumar Aluru">
+  <meta property="og:description" content="A source-cited assistant that answers business-law questions from a 469-page textbook, with hybrid retrieval, an LLM judge for faithfulness, and a multi-agent mode with human review.">
+  <meta property="og:image" content="https://arun949.github.io/assets/og-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Business Law RAG AI Assistant | Case study | Arunkumar Aluru</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261153">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Business Law RAG AI Assistant",
+    "description": "A source-cited assistant that answers business-law questions from a 469-page textbook, with hybrid retrieval, an LLM judge for faithfulness, and a multi-agent mode with human review.",
+    "url": "https://arun949.github.io/projects/business-law-rag.html",
+    "author": {
+      "@type": "Person",
+      "name": "Arunkumar Aluru",
+      "url": "https://arun949.github.io/"
+    },
+    "keywords": "GPT-4o mini, text-embedding-3-small, FAISS, BM25, FastMCP, Gradio, PyMuPDF"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><div class="nav-start"><a class="back-link" href="../index.html#work" data-back aria-label="Go back"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a></div><div class="nav-end"><a class="nav-back" href="../index.html#work">All work</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
+  <main id="main-content">
+    <article class="post project-page container">
+      <header class="post-header"><p class="eyebrow">Case study / RAG &amp; Agents</p><h1>Business Law RAG <em>AI Assistant.</em></h1><p class="post-dek">A retrieval-augmented assistant that answers only from its documents, cites the exact page, refuses what it cannot support, and checks its own answers for faithfulness.</p><p class="project-team">Team project · Tech Tribe, GenAI Hackathon (week 26), 4 contributors</p><ul class="tags"><li>GPT-4o mini</li><li>text-embedding-3-small</li><li>FAISS</li><li>BM25</li><li>FastMCP</li><li>Gradio</li><li>PyMuPDF</li></ul><p class="post-actions "><a class="button button-solid" href="https://github.com/Arun949/Business-Law-RAG-LLM-AI-Assistant" target="_blank" rel="noopener noreferrer">View the repository ↗</a><a class="button button-outline" href="../posts/building-rag-systems.html">Read: Building RAG systems you can trust</a></p></header>
+      <div class="post-body">
+        <p class="post-lead">Legal questions need answers you can verify. This assistant answers questions about business law using only a private PDF textbook, cites the exact page for every claim, refuses questions the documents cannot answer, and asks for clarification when a question is ambiguous.</p>
+        <dl class="metric-grid"><div><dt>469</dt><dd>pages indexed from one business-law textbook</dd></div><div><dt>466</dt><dd>searchable chunks</dd></div><div><dt>19/19</dt><dd>evaluation questions passed</dd></div><div><dt>$0.13</dt><dd>total API cost across 681 model calls</dd></div></dl>
+        <h2>How it works</h2>
+        <ol class="pipeline"><li><span class="pipeline-step">01</span><strong>Extract</strong><span>PyMuPDF pulls text page by page and flags low-text pages</span></li><li><span class="pipeline-step">02</span><strong>Chunk and embed</strong><span>800-character sentence-boundary chunks with overlap, embedded with text-embedding-3-small into a FAISS index</span></li><li><span class="pipeline-step">03</span><strong>Reformulate</strong><span>follow-up questions are rewritten into standalone queries using the chat history</span></li><li><span class="pipeline-step">04</span><strong>Hybrid retrieval</strong><span>FAISS and BM25 each return their top 20, fused with Reciprocal Rank Fusion into the best 5 excerpts</span></li><li><span class="pipeline-step">05</span><strong>Generate</strong><span>GPT-4o mini answers from labelled excerpts with a versioned system prompt at temperature 0</span></li><li><span class="pipeline-step">06</span><strong>Judge</strong><span>an LLM-as-judge lists every claim and checks it against the excerpts before the answer is shown</span></li></ol>
+        <h2>The multi-agent mode</h2>
+        <p>A second interface splits the work between three agents: an <strong>internal researcher</strong> that searches the textbook, an <strong>external fact-checker</strong> that searches the web through an MCP server, and a <strong>synthesizer</strong> that combines both and clearly separates what came from the corpus and what came from the web. A person can then approve, rewrite, or rephrase the answer, and approved web findings can be added back into the index.</p>
+        <h2>How it was evaluated</h2>
+        <p>The test set covers four kinds of question, because a trustworthy assistant has to behave well beyond the easy cases:</p>
+        <ul class="post-checklist"><li><strong>Factual:</strong> 11 of 11 answered from the documents</li><li><strong>Cross-reference:</strong> 3 of 3 answered by combining several passages</li><li><strong>Out of scope:</strong> 3 of 3 correctly refused</li><li><strong>Ambiguous:</strong> 2 of 2 handled by clarifying or answering broadly</li></ul>
+        <p>Every answered question was also judged <strong>faithful</strong> to its sources by the LLM judge.</p>
+        <p class="post-callout">A pass here means the assistant behaved correctly for the question type: answered, refused, or clarified. It is a behaviour check rather than a comparison with reference answers.</p>
+        <h2>What I would do next</h2>
+        <ul><li>Add OCR so diagrams and image-only pages become searchable.</li><li>Grow the evaluation set and score answers against reference answers, not only behaviour.</li><li>Use the retrieval score as a confidence threshold for refusing out-of-scope questions earlier.</li></ul>
+        <p class="post-actions post-actions-end"><a class="button button-solid" href="https://github.com/Arun949/Business-Law-RAG-LLM-AI-Assistant" target="_blank" rel="noopener noreferrer">View the repository ↗</a><a class="button button-outline" href="../posts/building-rag-systems.html">Read: Building RAG systems you can trust</a></p>
+        <nav class="project-next" aria-label="More projects">
+          <p class="latest-label">Next case study</p>
+          <a href="electropicks.html"><span>ElectroPicks: A Real-time Recommender</span><small>Recommender systems</small></a>
+        </nav>
+      </div>
+    </article>
+  </main>
+  <footer class="footer container"><span>© <span data-year>2026</span> Arunkumar Aluru</span><span class="footer-links"><a href="electropicks.html">ElectroPicks: A Real-time Recommender</a><a href="bike-demand-forecasting.html">Real-time Bike Demand Forecasting</a><a href="healthinsight-pipeline.html">HealthInsight: A Serverless Health-data Pipeline</a></span></footer>
+  <script src="../script.js?v=20261153"></script>
+</body>
+</html>

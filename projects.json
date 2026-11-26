@@ -1,0 +1,85 @@
+[
+  {
+    "slug": "business-law-rag",
+    "title": "Business Law RAG AI Assistant",
+    "category": "RAG & Agents",
+    "summary": "A source-cited assistant that answers business-law questions from a 469-page textbook, with hybrid retrieval, an LLM judge for faithfulness, and a multi-agent mode with human review.",
+    "filters": [
+      "llm"
+    ],
+    "stack": [
+      "GPT-4o mini",
+      "text-embedding-3-small",
+      "FAISS",
+      "BM25",
+      "FastMCP",
+      "Gradio",
+      "PyMuPDF"
+    ],
+    "url": "projects/business-law-rag.html"
+  },
+  {
+    "slug": "electropicks",
+    "title": "ElectroPicks: A Real-time Recommender",
+    "category": "Recommender systems",
+    "summary": "An end-to-end recommender on 22.6 million Amazon Electronics reviews: two-tower retrieval, FAISS candidates, and LightGBM ranking behind a live store that reacts to every click.",
+    "filters": [
+      "recsys",
+      "mlops"
+    ],
+    "stack": [
+      "PyTorch",
+      "TorchScript",
+      "FAISS",
+      "LightGBM",
+      "FastAPI",
+      "PostgreSQL",
+      "Streamlit",
+      "Docker"
+    ],
+    "url": "projects/electropicks.html"
+  },
+  {
+    "slug": "bike-demand-forecasting",
+    "title": "Real-time Bike Demand Forecasting",
+    "category": "MLOps",
+    "summary": "A complete MLOps system for bike-rental demand: validated data ingestion, scheduled batch prediction, automatic retraining with safe model promotion, and drift monitoring.",
+    "filters": [
+      "mlops",
+      "forecasting"
+    ],
+    "stack": [
+      "Airflow",
+      "FastAPI",
+      "Streamlit",
+      "MLflow",
+      "Great Expectations",
+      "PostgreSQL",
+      "Grafana",
+      "Docker",
+      "GitHub Actions"
+    ],
+    "url": "projects/bike-demand-forecasting.html"
+  },
+  {
+    "slug": "healthinsight-pipeline",
+    "title": "HealthInsight: A Serverless Health-data Pipeline",
+    "category": "Data engineering · AWS",
+    "summary": "A serverless AWS pipeline for 101,766 diabetic hospital encounters: medallion data lake, automated data-quality gates, daily orchestration, analytics, and a readmission-risk API.",
+    "filters": [
+      "data"
+    ],
+    "stack": [
+      "S3",
+      "Lambda",
+      "Glue (PySpark)",
+      "Athena",
+      "Step Functions",
+      "SageMaker",
+      "API Gateway",
+      "DynamoDB",
+      "CloudWatch"
+    ],
+    "url": "projects/healthinsight-pipeline.html"
+  }
+]

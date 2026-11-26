@@ -1,0 +1,32 @@
+{
+  "slug": "bike-demand-forecasting",
+  "order": 3,
+  "title": "Real-time bike demand *forecasting.*",
+  "category": "MLOps",
+  "summary": "A complete MLOps system for bike-rental demand: validated data ingestion, scheduled batch prediction, automatic retraining with safe model promotion, and drift monitoring.",
+  "dek": "A small model inside a full production loop: every file is validated, every prediction is traced to a model version, and a new model only replaces the old one if it is at least as good.",
+  "team": "Team project · 5 contributors",
+  "filters": [
+    "mlops",
+    "forecasting"
+  ],
+  "stack": [
+    "Airflow",
+    "FastAPI",
+    "Streamlit",
+    "MLflow",
+    "Great Expectations",
+    "PostgreSQL",
+    "Grafana",
+    "Docker",
+    "GitHub Actions"
+  ],
+  "links": [
+    {
+      "label": "View the repository",
+      "url": "https://github.com/Arun949/Real-Time-Bike-Demand-Forecasting"
+    }
+  ],
+  "cardMetric": "Validated, retrained, and monitored end to end",
+  "body": "Training a model is the easy part. This project is about everything around it: making sure bad data never reaches the model, serving predictions reliably, retraining when enough new data arrives, and noticing when the world drifts away from the training data.\n\n:: 8 | data-quality expectations on every file\n:: 7 | types of data errors injected to test them\n:: 3 | scheduled Airflow pipelines\n:: 1 | command to start the whole stack\n\n## The system\n\n=> Ingest: new 10-row files arrive every minute and are validated with Great Expectations for completeness, validity, consistency, schema, and type\n=> Triage: clean rows go to the database; bad rows are quarantined, scored by severity, and serious problems trigger a Teams alert\n=> Predict: every two minutes, new clean files are sent in one batch to the FastAPI model service, and each prediction is stored with its model version\n=> Retrain: every hour, if enough new data has arrived, a candidate Random Forest is trained and logged to MLflow\n=> Promote safely: the candidate replaces the champion only if its R² is within 0.01 of the champion and inference stays under two seconds\n=> Monitor: Grafana dashboards track data quality, feature drift against the training baseline, and predictions per model version\n\n## Testing the guard rails\n\nTo prove the validation works, a corruption script deliberately injects seven kinds of errors, such as missing columns, out-of-range values, invalid categories, wrong data types, duplicates, and inconsistent fields, and the pipeline has to catch them.\n\n> Alerts are tiered on purpose: low-severity issues are logged but not sent, to avoid alert fatigue.\n\n## Engineering practices\n\n- [ ] **Model registry:** the serving model is always the MLflow model tagged as champion, with a local fallback\n- [ ] **Traceability:** every stored prediction records which model version produced it\n- [ ] **CI/CD:** linting and tests on every pull request, and automatic versioned releases\n- [ ] **Reproducible:** the full stack, from database to dashboards, starts with Docker Compose\n\nThe data is an hourly bike-sharing dataset of 17,379 records, streamed into the system in small files to simulate a live feed.\n"
+}

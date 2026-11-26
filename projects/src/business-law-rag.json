@@ -1,0 +1,33 @@
+{
+  "slug": "business-law-rag",
+  "order": 1,
+  "title": "Business Law RAG *AI Assistant.*",
+  "category": "RAG & Agents",
+  "summary": "A source-cited assistant that answers business-law questions from a 469-page textbook, with hybrid retrieval, an LLM judge for faithfulness, and a multi-agent mode with human review.",
+  "dek": "A retrieval-augmented assistant that answers only from its documents, cites the exact page, refuses what it cannot support, and checks its own answers for faithfulness.",
+  "team": "Team project · Tech Tribe, GenAI Hackathon (week 26), 4 contributors",
+  "filters": [
+    "llm"
+  ],
+  "stack": [
+    "GPT-4o mini",
+    "text-embedding-3-small",
+    "FAISS",
+    "BM25",
+    "FastMCP",
+    "Gradio",
+    "PyMuPDF"
+  ],
+  "links": [
+    {
+      "label": "View the repository",
+      "url": "https://github.com/Arun949/Business-Law-RAG-LLM-AI-Assistant"
+    },
+    {
+      "label": "Read: Building RAG systems you can trust",
+      "url": "../posts/building-rag-systems.html"
+    }
+  ],
+  "cardMetric": "19/19 evaluation questions passed",
+  "body": "Legal questions need answers you can verify. This assistant answers questions about business law using only a private PDF textbook, cites the exact page for every claim, refuses questions the documents cannot answer, and asks for clarification when a question is ambiguous.\n\n:: 469 | pages indexed from one business-law textbook\n:: 466 | searchable chunks\n:: 19/19 | evaluation questions passed\n:: $0.13 | total API cost across 681 model calls\n\n## How it works\n\n=> Extract: PyMuPDF pulls text page by page and flags low-text pages\n=> Chunk and embed: 800-character sentence-boundary chunks with overlap, embedded with text-embedding-3-small into a FAISS index\n=> Reformulate: follow-up questions are rewritten into standalone queries using the chat history\n=> Hybrid retrieval: FAISS and BM25 each return their top 20, fused with Reciprocal Rank Fusion into the best 5 excerpts\n=> Generate: GPT-4o mini answers from labelled excerpts with a versioned system prompt at temperature 0\n=> Judge: an LLM-as-judge lists every claim and checks it against the excerpts before the answer is shown\n\n## The multi-agent mode\n\nA second interface splits the work between three agents: an **internal researcher** that searches the textbook, an **external fact-checker** that searches the web through an MCP server, and a **synthesizer** that combines both and clearly separates what came from the corpus and what came from the web. A person can then approve, rewrite, or rephrase the answer, and approved web findings can be added back into the index.\n\n## How it was evaluated\n\nThe test set covers four kinds of question, because a trustworthy assistant has to behave well beyond the easy cases:\n\n- [ ] **Factual:** 11 of 11 answered from the documents\n- [ ] **Cross-reference:** 3 of 3 answered by combining several passages\n- [ ] **Out of scope:** 3 of 3 correctly refused\n- [ ] **Ambiguous:** 2 of 2 handled by clarifying or answering broadly\n\nEvery answered question was also judged **faithful** to its sources by the LLM judge.\n\n> A pass here means the assistant behaved correctly for the question type: answered, refused, or clarified. It is a behaviour check rather than a comparison with reference answers.\n\n## What I would do next\n\n- Add OCR so diagrams and image-only pages become searchable.\n- Grow the evaluation set and score answers against reference answers, not only behaviour.\n- Use the retrieval score as a confidence threshold for refusing out-of-scope questions earlier.\n"
+}

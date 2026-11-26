@@ -1,0 +1,35 @@
+{
+  "slug": "electropicks",
+  "order": 2,
+  "title": "ElectroPicks: a *real-time recommender.*",
+  "category": "Recommender systems",
+  "summary": "An end-to-end recommender on 22.6 million Amazon Electronics reviews: two-tower retrieval, FAISS candidates, and LightGBM ranking behind a live store that reacts to every click.",
+  "dek": "From 22.6 million raw reviews to a live web store where every view, save, or purchase reshapes the next page, without retraining.",
+  "team": "Team project · 4 people. My part: the two-tower retrieval model (the deployed core), system architecture, full-dataset production runs, integration, and deployment.",
+  "filters": [
+    "recsys",
+    "mlops"
+  ],
+  "stack": [
+    "PyTorch",
+    "TorchScript",
+    "FAISS",
+    "LightGBM",
+    "FastAPI",
+    "PostgreSQL",
+    "Streamlit",
+    "Docker"
+  ],
+  "links": [
+    {
+      "label": "View the repository",
+      "url": "https://github.com/Arun949/amazon-electronics-recs"
+    }
+  ],
+  "image": "assets/projects/electropicks-demo.gif",
+  "imageAlt": "Animated demo of the ElectroPicks store: categories, a search bar, and trending electronics that update as the user browses",
+  "imageWidth": 960,
+  "imageHeight": 600,
+  "cardMetric": "27.5 ms mean live API response time",
+  "body": "Most recommenders are judged on accuracy alone, and many can score well simply by showing everyone the same few bestsellers. ElectroPicks set out to build a store that is genuinely personal, covers the catalogue, and responds in real time.\n\n:: 22.6M | raw Amazon Electronics reviews\n:: +25% | NDCG@10 over the popularity baseline\n:: 85% | of the catalogue covered by recommendations\n:: 27.5 ms | mean end-to-end API response (35.7 ms p95)\n\n## The data\n\nThe project uses the Amazon Reviews 2023 Electronics category. After keeping reviews from 2019 onward, filtering to users and items with at least five interactions, and capping at five million interactions, the training set has about 552,000 users and 148,000 items. The split is by time, not at random: the test period is the final 10% of the timeline, so the models are always predicting the future.\n\n## Offline: from baselines to ranking\n\n=> Baselines: random and popularity recommenders, plus an evaluation harness for Recall, NDCG, and catalogue coverage\n=> Matrix factorisation: MF-BPR written from scratch in PyTorch\n=> Two-tower retrieval: a user tower that pools recent history and an item tower, trained with in-batch negatives\n=> Ranking: LightGBM LambdaRank re-ranks the top 100 FAISS candidates using 12 user, item, cross, and time features\n\n## Online: every request\n\n=> History: the user's last 20 items from PostgreSQL\n=> Encode: the TorchScript user tower\n=> Retrieve: FAISS top 100 across 148,000 items\n=> Rank and diversify: LightGBM re-ranking, a brand cap, and optional MMR for variety\n=> Explain: each pick comes with a \"Because you viewed…\" reason\n\n## What we learned\n\n- [ ] **Only the full pipeline beat popularity.** Two-tower retrieval plus LightGBM was the only personalised method to beat the popularity baseline on NDCG@10, with a 2.5× lift over retrieval alone.\n- [ ] **Coverage matters as much as accuracy.** The popularity baseline covered 0.05% of the catalogue; the full pipeline covered 85%.\n- [ ] **An honest negative result.** MF-BPR converged to a popularity clone. We reported it rather than hiding it.\n- [ ] **Freshness beats popularity.** Item age was the most important ranking feature.\n- [ ] **Profile before you optimise.** One ranking step first took about a second; converting the feature store once at startup made the pipeline 28× faster end to end.\n\n## What I would do next\n\n- Blend content-based item embeddings into the index so new items can be recommended: 31% of test items never appear in training.\n- Train separate rankers per user-activity segment to close the cold-start gap.\n"
+}

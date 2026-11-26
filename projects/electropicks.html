@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An end-to-end recommender on 22.6 million Amazon Electronics reviews: two-tower retrieval, FAISS candidates, and LightGBM ranking behind a live store that reacts to every click.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#e9e7df" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111b1a" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://arun949.github.io/projects/electropicks.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Arunkumar Aluru">
+  <meta property="og:url" content="https://arun949.github.io/projects/electropicks.html">
+  <meta property="og:title" content="ElectroPicks: A Real-time Recommender | Case study | Arunkumar Aluru">
+  <meta property="og:description" content="An end-to-end recommender on 22.6 million Amazon Electronics reviews: two-tower retrieval, FAISS candidates, and LightGBM ranking behind a live store that reacts to every click.">
+  <meta property="og:image" content="https://arun949.github.io/assets/projects/electropicks-demo.gif">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>ElectroPicks: A Real-time Recommender | Case study | Arunkumar Aluru</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261153">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "ElectroPicks: A Real-time Recommender",
+    "description": "An end-to-end recommender on 22.6 million Amazon Electronics reviews: two-tower retrieval, FAISS candidates, and LightGBM ranking behind a live store that reacts to every click.",
+    "url": "https://arun949.github.io/projects/electropicks.html",
+    "author": {
+      "@type": "Person",
+      "name": "Arunkumar Aluru",
+      "url": "https://arun949.github.io/"
+    },
+    "keywords": "PyTorch, TorchScript, FAISS, LightGBM, FastAPI, PostgreSQL, Streamlit, Docker"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <header class="site-header"><nav class="nav container" aria-label="Primary navigation"><div class="nav-start"><a class="back-link" href="../index.html#work" data-back aria-label="Go back"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="wordmark" href="../index.html">Arunkumar<span>.</span></a></div><div class="nav-end"><a class="nav-back" href="../index.html#work">All work</a><button class="theme-toggle" type="button" aria-label="Switch colour theme"><span class="theme-label">Dark</span></button></div></nav></header>
+  <main id="main-content">
+    <article class="post project-page container">
+      <header class="post-header"><p class="eyebrow">Case study / Recommender systems</p><h1>ElectroPicks: a <em>real-time recommender.</em></h1><p class="post-dek">From 22.6 million raw reviews to a live web store where every view, save, or purchase reshapes the next page, without retraining.</p><p class="project-team">Team project · 4 people. My part: the two-tower retrieval model (the deployed core), system architecture, full-dataset production runs, integration, and deployment.</p><ul class="tags"><li>PyTorch</li><li>TorchScript</li><li>FAISS</li><li>LightGBM</li><li>FastAPI</li><li>PostgreSQL</li><li>Streamlit</li><li>Docker</li></ul><p class="post-actions "><a class="button button-solid" href="https://github.com/Arun949/amazon-electronics-recs" target="_blank" rel="noopener noreferrer">View the repository ↗</a></p></header>
+      <figure class="post-cover project-media"><img src="../assets/projects/electropicks-demo.gif" alt="Animated demo of the ElectroPicks store: categories, a search bar, and trending electronics that update as the user browses" width="960" height="600" loading="lazy"></figure>
+      <div class="post-body">
+        <p class="post-lead">Most recommenders are judged on accuracy alone, and many can score well simply by showing everyone the same few bestsellers. ElectroPicks set out to build a store that is genuinely personal, covers the catalogue, and responds in real time.</p>
+        <dl class="metric-grid"><div><dt>22.6M</dt><dd>raw Amazon Electronics reviews</dd></div><div><dt>+25%</dt><dd>NDCG@10 over the popularity baseline</dd></div><div><dt>85%</dt><dd>of the catalogue covered by recommendations</dd></div><div><dt>27.5 ms</dt><dd>mean end-to-end API response (35.7 ms p95)</dd></div></dl>
+        <h2>The data</h2>
+        <p>The project uses the Amazon Reviews 2023 Electronics category. After keeping reviews from 2019 onward, filtering to users and items with at least five interactions, and capping at five million interactions, the training set has about 552,000 users and 148,000 items. The split is by time, not at random: the test period is the final 10% of the timeline, so the models are always predicting the future.</p>
+        <h2>Offline: from baselines to ranking</h2>
+        <ol class="pipeline"><li><span class="pipeline-step">01</span><strong>Baselines</strong><span>random and popularity recommenders, plus an evaluation harness for Recall, NDCG, and catalogue coverage</span></li><li><span class="pipeline-step">02</span><strong>Matrix factorisation</strong><span>MF-BPR written from scratch in PyTorch</span></li><li><span class="pipeline-step">03</span><strong>Two-tower retrieval</strong><span>a user tower that pools recent history and an item tower, trained with in-batch negatives</span></li><li><span class="pipeline-step">04</span><strong>Ranking</strong><span>LightGBM LambdaRank re-ranks the top 100 FAISS candidates using 12 user, item, cross, and time features</span></li></ol>
+        <h2>Online: every request</h2>
+        <ol class="pipeline"><li><span class="pipeline-step">01</span><strong>History</strong><span>the user&#39;s last 20 items from PostgreSQL</span></li><li><span class="pipeline-step">02</span><strong>Encode</strong><span>the TorchScript user tower</span></li><li><span class="pipeline-step">03</span><strong>Retrieve</strong><span>FAISS top 100 across 148,000 items</span></li><li><span class="pipeline-step">04</span><strong>Rank and diversify</strong><span>LightGBM re-ranking, a brand cap, and optional MMR for variety</span></li><li><span class="pipeline-step">05</span><strong>Explain</strong><span>each pick comes with a &quot;Because you viewed…&quot; reason</span></li></ol>
+        <h2>What we learned</h2>
+        <ul class="post-checklist"><li><strong>Only the full pipeline beat popularity.</strong> Two-tower retrieval plus LightGBM was the only personalised method to beat the popularity baseline on NDCG@10, with a 2.5× lift over retrieval alone.</li><li><strong>Coverage matters as much as accuracy.</strong> The popularity baseline covered 0.05% of the catalogue; the full pipeline covered 85%.</li><li><strong>An honest negative result.</strong> MF-BPR converged to a popularity clone. We reported it rather than hiding it.</li><li><strong>Freshness beats popularity.</strong> Item age was the most important ranking feature.</li><li><strong>Profile before you optimise.</strong> One ranking step first took about a second; converting the feature store once at startup made the pipeline 28× faster end to end.</li></ul>
+        <h2>What I would do next</h2>
+        <ul><li>Blend content-based item embeddings into the index so new items can be recommended: 31% of test items never appear in training.</li><li>Train separate rankers per user-activity segment to close the cold-start gap.</li></ul>
+        <p class="post-actions post-actions-end"><a class="button button-solid" href="https://github.com/Arun949/amazon-electronics-recs" target="_blank" rel="noopener noreferrer">View the repository ↗</a></p>
+        <nav class="project-next" aria-label="More projects">
+          <p class="latest-label">Next case study</p>
+          <a href="bike-demand-forecasting.html"><span>Real-time Bike Demand Forecasting</span><small>MLOps</small></a>
+        </nav>
+      </div>
+    </article>
+  </main>
+  <footer class="footer container"><span>© <span data-year>2026</span> Arunkumar Aluru</span><span class="footer-links"><a href="business-law-rag.html">Business Law RAG AI Assistant</a><a href="bike-demand-forecasting.html">Real-time Bike Demand Forecasting</a><a href="healthinsight-pipeline.html">HealthInsight: A Serverless Health-data Pipeline</a></span></footer>
+  <script src="../script.js?v=20261153"></script>
+</body>
+</html>

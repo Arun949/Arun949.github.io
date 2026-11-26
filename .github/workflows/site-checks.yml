@@ -1,0 +1,66 @@
+name: Site checks
+
+# Runs on every change (including posts published from the Write page),
+# on pull requests, and once a week to catch links that break over time.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  html:
+    name: Valid HTML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate pages
+        run: npx --yes html-validate@8 "*.html" "posts/*.html" "projects/*.html" "fr/*.html"
+      - name: French pages are up to date
+        run: |
+          node scripts/build-fr.js
+          git diff --exit-code -- fr/ || (echo "::warning::fr/ is out of date. Run: node scripts/build-fr.js" && exit 0)
+
+  links:
+    name: No broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: true
+          args: >-
+            --no-progress
+            --root-dir ${{ github.workspace }}
+            --max-retries 3
+            --timeout 20
+            --accept 200..=299,403,429
+            --exclude linkedin\.com
+            --exclude ieeexplore\.ieee\.org
+            --exclude fonts\.(googleapis|gstatic)\.com
+            --exclude api\.web3forms\.com
+            --exclude-path .agents
+            "./**/*.html" "./feed.xml" "./sitemap.xml"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  lighthouse:
+    name: Accessibility, SEO and speed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: false

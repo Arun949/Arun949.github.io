@@ -3,7 +3,7 @@
 
 const SITE = 'https://arun949.github.io';
 /* Bump this (and editor-version.json) whenever the editor or the article template changes. */
-const EDITOR_VERSION = '20261142';
+const EDITOR_VERSION = '20261153';
 const TRACKS = { journey: 'My journey', research: 'My research' };
 
 /* ------------------------------------------------------------------ */
@@ -65,6 +65,16 @@ function markdownToHtml(source) {
         const [, label, text] = item.match(/^([^:]{1,30}):\s*(.*)$/) || [null, '', item];
         return `<li>${label ? `<span>${inline(label)}</span>` : ''}${inline(text)}</li>`;
       }).join('')}</ol>`);
+    } else if (list.type === 'pipeline') {
+      html.push(`<ol class="pipeline">${list.items.map((item, i) => {
+        const [, label, text] = item.match(/^([^:]{1,40}):\s*(.*)$/) || [null, item, ''];
+        return `<li><span class="pipeline-step">${String(i + 1).padStart(2, '0')}</span><strong>${inline(label)}</strong>${text ? `<span>${inline(text)}</span>` : ''}</li>`;
+      }).join('')}</ol>`);
+    } else if (list.type === 'metrics') {
+      html.push(`<dl class="metric-grid">${list.items.map(item => {
+        const [, value, label] = item.match(/^([^|]+)\|\s*(.*)$/) || [null, item, ''];
+        return `<div><dt>${inline(value.trim())}</dt><dd>${inline(label)}</dd></div>`;
+      }).join('')}</dl>`);
     } else if (list.type === 'check') {
       html.push(`<ul class="post-checklist">${list.items.map(item => `<li>${inline(item)}</li>`).join('')}</ul>`);
     } else {
@@ -108,6 +118,10 @@ function markdownToHtml(source) {
       html.push(`<p class="post-callout">${inline(quote.join(' '))}</p>`);
       continue;
     }
+    const stage = trimmed.match(/^=>\s+(.*)$/);
+    const metric = trimmed.match(/^::\s+(.*\|.*)$/);
+    if (stage) { addListItem('pipeline', stage[1]); continue; }
+    if (metric) { addListItem('metrics', metric[1]); continue; }
     const step = trimmed.match(/^->\s+(.*)$/);
     const check = trimmed.match(/^[-*]\s+\[[ xX]?\]\s+(.*)$/);
     const bullet = trimmed.match(/^[-*]\s+(.*)$/);
@@ -146,7 +160,7 @@ const titleCase = text => plainTitle(text).replace(/\.$/, '').split(' ').map((wo
 function renderPostPage(post, bodyHtml) {
   const url = `${SITE}/posts/${post.slug}.html`;
   /* Link previews need a still image; animated SVG covers have a JPG still in socialImage. */
-  const image = post.socialImage ? `${SITE}/${post.socialImage}` : post.image && !post.image.endsWith('.svg') ? `${SITE}/${post.image}` : `${SITE}/assets/social-preview.jpg?v=2`;
+  const image = post.socialImage ? `${SITE}/${post.socialImage}` : post.image && !post.image.endsWith('.svg') ? `${SITE}/${post.image}` : `${SITE}/assets/og-card.jpg`;
   const trackLinks = post.tracks.map(t => `<a href="../blog.html#${t}">${TRACKS[t]}</a>`).join(' · ');
   const eyebrow = [trackLinks, escapeHtml(post.category), escapeHtml(post.readTime)].filter(Boolean).join(' / ');
   const backTrack = post.tracks.length === 1 ? post.tracks[0] : null;
@@ -187,6 +201,7 @@ function renderPostPage(post, bodyHtml) {
   <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="${url}">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Arunkumar Aluru">
   <meta property="og:url" content="${url}">
   <meta property="og:title" content="${title} | Arunkumar Aluru">
   <meta property="og:description" content="${summary}">
@@ -245,6 +260,41 @@ const upsertSitemap = (xml, slug, date) => {
 };
 
 
+/* RSS feed for the blog, regenerated whenever the article list changes. */
+function renderFeed(articles) {
+  const xml = v => String(v ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[ch]));
+  const toDate = d => {
+    const date = /^\d{4}$/.test(String(d)) ? new Date(`${d}-01-01T12:00:00Z`) : new Date(`${d}T12:00:00Z`);
+    return isNaN(date) ? new Date().toUTCString() : date.toUTCString();
+  };
+  const items = (articles || [])
+    .filter(a => a.url && !a.external)
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+    .map(a => {
+      const link = `${SITE}/${a.url}`;
+      return `    <item>
+      <title>${xml(plainTitle(a.title))}</title>
+      <link>${xml(link)}</link>
+      <guid isPermaLink="true">${xml(link)}</guid>
+      <pubDate>${toDate(a.date)}</pubDate>
+      <description>${xml(a.summary)}</description>
+${(a.tracks || []).map(tr => `      <category>${xml(TRACKS[tr] || tr)}</category>`).join('\n')}
+    </item>`;
+    }).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arunkumar Aluru: My Blog</title>
+    <link>${SITE}/blog.html</link>
+    <atom:link href="${SITE}/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>My journey in AI engineering and the research I am working on.</description>
+    <language>en</language>
+${items}
+  </channel>
+</rss>
+`;
+}
+
 if (typeof module !== 'undefined') {
-  module.exports = { SITE, EDITOR_VERSION, TRACKS, titleCase, escapeHtml, slugify, today, longDate, readTime, safeUrl, inline, markdownToHtml, renderPostPage, sitemapEntry, removeFromSitemap, upsertSitemap, plainTitle };
+  module.exports = { SITE, EDITOR_VERSION, TRACKS, renderFeed, titleCase, escapeHtml, slugify, today, longDate, readTime, safeUrl, inline, markdownToHtml, renderPostPage, sitemapEntry, removeFromSitemap, upsertSitemap, plainTitle };
 }

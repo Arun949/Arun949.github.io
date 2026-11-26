@@ -273,7 +273,7 @@ const removePost = async article => {
     await ensureCurrentEditor();
     const current = await loadArticles();
     const remaining = current.filter(a => a.url !== article.url);
-    const files = [{ path: 'articles.json', content: `${JSON.stringify(remaining, null, 2)}\n` }];
+    const files = [{ path: 'articles.json', content: `${JSON.stringify(remaining, null, 2)}\n` }, { path: 'feed.xml', content: renderFeed(remaining) }];
     if (!article.external && article.url?.startsWith('posts/')) {
       const slug = article.url.replace(/^posts\//, '').replace(/\.html$/, '');
       files.push({ path: article.url, remove: true });
@@ -364,6 +364,7 @@ const publish = async () => {
       { path: entry.url, content: renderPostPage(entry, markdownToHtml(body)) },
       { path: `posts/src/${slug}.json`, content: `${JSON.stringify(source, null, 2)}\n` },
       { path: 'articles.json', content: `${JSON.stringify(updatedList, null, 2)}\n` },
+      { path: 'feed.xml', content: renderFeed(updatedList) },
       { path: 'sitemap.xml', content: upsertSitemap(sitemap, slug, entry.updated || date) }
     );
     await commitFiles(files, `${editing ? 'Update' : 'Publish'} post: ${titleCase(title)}`);

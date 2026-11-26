@@ -1,0 +1,31 @@
+{
+  "slug": "healthinsight-pipeline",
+  "order": 4,
+  "title": "HealthInsight: a *serverless health-data pipeline.*",
+  "category": "Data engineering · AWS",
+  "summary": "A serverless AWS pipeline for 101,766 diabetic hospital encounters: medallion data lake, automated data-quality gates, daily orchestration, analytics, and a readmission-risk API.",
+  "dek": "A proof of concept for a hospital consortium: raw records to a governed bronze, silver, and gold data lake on AWS, with quality gates, monitoring, and a risk lookup API, run for under a dollar a month.",
+  "team": "Cloud Computing & Big Data course project",
+  "filters": [
+    "data"
+  ],
+  "stack": [
+    "S3",
+    "Lambda",
+    "Glue (PySpark)",
+    "Athena",
+    "Step Functions",
+    "SageMaker",
+    "API Gateway",
+    "DynamoDB",
+    "CloudWatch"
+  ],
+  "links": [
+    {
+      "label": "View the repository",
+      "url": "https://github.com/Arun949/healthinsight-aws-pipeline"
+    }
+  ],
+  "cardMetric": "101,766 hospital encounters processed",
+  "body": "Hospitals want to know which diabetic patients are likely to be readmitted within 30 days. Before any model can help, the data has to be ingested, cleaned, governed, and made queryable. This project builds that foundation on AWS, using only serverless services and a strict free-tier budget.\n\n:: 101,766 | patient encounters (UCI Diabetes 130-US Hospitals)\n:: 22 | AWS components wired together\n:: ~7 min | for the full daily pipeline run\n:: ~$0.49 | estimated monthly cost against a $5 budget\n\n## The pipeline\n\n=> Ingest: a Lambda function loads the raw CSV into the S3 bronze zone as date-partitioned JSON, while a simulator streams new records every minute\n=> Catalogue: Glue crawlers discover the schemas and register them in the Glue Data Catalog\n=> Bronze to silver: a PySpark Glue job casts types, removes duplicates, derives features such as age group and readmission flags, and writes partitioned Parquet\n=> Quality gates: a Lambda runs four Athena checks, and the pipeline stops if any fail\n=> Silver to gold: a second Glue job aggregates 40 patient cohorts with readmission rates from 2.4% to 20.1%\n=> Serve: Athena for analytics, and an API that returns a cohort's readmission risk and logs every request to DynamoDB\n\nThe whole flow is orchestrated by Step Functions, runs daily at 06:00 UTC, and is monitored with CloudWatch dashboards, alarms, SNS email alerts, CloudTrail, and an AWS budget.\n\n## What the data showed\n\nAbout 11% of encounters led to readmission within 30 days, 35% after more than 30 days, and 54% had no readmission. Risk varied strongly by cohort, from 2.4% to 20.1%.\n\n## An honest look at the model\n\nA Random Forest trained on 50,000 encounters reached an **AUC of 0.569**. That is only modestly better than chance, and below the 0.60 to 0.65 often reported for this dataset. For that reason the deployed API uses the transparent cohort risk rates from the gold layer rather than the model.\n\n> The value of this project is the platform: reliable, governed, monitored data. A stronger model is the natural next step, and the pipeline is ready for it.\n\n## What I would do next\n\n- Train a gradient-boosted model with richer features and deploy it as a real-time SageMaker endpoint.\n- Replace the simulator with true streaming (Kinesis and HL7 FHIR).\n- Add a VPC, CI/CD, and stricter healthcare compliance controls before any real patient data.\n"
+}

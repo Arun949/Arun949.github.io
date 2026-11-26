@@ -38,4 +38,5 @@ for (const entry of articles) {
 }
 
 fs.writeFileSync(articlesPath, `${JSON.stringify(articles, null, 2)}\n`);
+fs.writeFileSync(path.join(root, 'feed.xml'), core.renderFeed(articles));
 console.log(`${built} post(s) rebuilt; articles.json updated.`);

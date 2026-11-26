@@ -11,7 +11,11 @@ Plain HTML, CSS, and JavaScript served by GitHub Pages. There is no build step a
 ## Structure
 
 ```
-index.html                 Portfolio: hero, profile, journey, toolkit, work, blog preview, research, contact
+index.html                 Portfolio: hero, profile, blog, journey, toolkit, work (with filters), research, contact
+cv.html                    Web CV; PDF in assets/ is generated from it
+projects/                  Case-study pages, built from projects/src/*.json
+fr/                        French versions of the homepage and CV, built from i18n/fr.json
+feed.xml                   RSS feed of the blog
 blog.html                  "Let's talk about" blog: My journey and My research tracks, rendered from articles.json
 posts/*.html               One file per article
 articles.json              Blog article list, written by the editor
@@ -44,6 +48,27 @@ Use the private editor at [`/write.html`](https://arun949.github.io/write.html) 
 4. **Edit or remove** posts from the "Your posts" list, or with the **Edit** link on any post written in the editor.
 
 All posts, including the first two, have editable sources in `posts/src/`. If the article template in `write-core.js` changes, run `node scripts/build-posts.js` to rebuild every post page from its source.
+
+## Building generated pages
+
+Some pages are generated from source files. After editing the source, run the matching script and commit the output:
+
+| You changed | Run | It updates |
+|---|---|---|
+| `projects/src/*.json` (case studies) | `node scripts/build-projects.js` | `projects/*.html`, `projects.json` |
+| The article template in `write-core.js` | `node scripts/build-posts.js` | `posts/*.html`, `articles.json`, `feed.xml` |
+| `index.html`, `cv.html`, or `i18n/fr.json` | `node scripts/build-fr.js` | `fr/index.html`, `fr/cv.html` (lists any text missing a translation) |
+| `cv.html` | `scripts/build-cv-pdf.sh` | `assets/Arunkumar_Aluru_CV.pdf` and the French PDF |
+
+Posts published from the Write page update `articles.json`, `feed.xml` and `sitemap.xml` themselves.
+
+## Automatic checks
+
+`.github/workflows/site-checks.yml` runs on every push, every pull request and weekly: HTML validation, broken links (lychee), and Lighthouse accessibility, SEO, best practices and performance on key pages. A failing check shows a red ✗ on the commit and GitHub emails you.
+
+## Visitor statistics
+
+Create a free account at goatcounter.com (no cookies, no consent banner needed), then put your site code in `GOATCOUNTER_CODE` near the top of the features section in `script.js`.
 
 ## Local preview
 
